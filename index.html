@@ -422,17 +422,32 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
   const TOTAL_NUMEROS = 50;
-  const STORAGE_KEY = 'rifa-reservas';
   const ADMIN_PASSPHRASE = 'uniformes2026';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAsuHWqOv0DLhSYIC3kqRuEFL_nO3Qx4kU",
+    authDomain: "rifa-futbol-c55dc.firebaseapp.com",
+    databaseURL: "https://rifa-futbol-c55dc-default-rtdb.firebaseio.com",
+    projectId: "rifa-futbol-c55dc",
+    storageBucket: "rifa-futbol-c55dc.firebasestorage.app",
+    messagingSenderId: "631818133206",
+    appId: "1:631818133206:web:d8f5b0199d8d726222b377"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const reservasRef = ref(db, 'reservas');
 
   const grid = document.getElementById('grid');
   const soldCountEl = document.getElementById('sold-count');
   const progressFill = document.getElementById('progress-fill');
 
-  let reservas = [];        // [{numero, nombre, telefono, fecha}]
-  let loaded = false;
+  let reservas = [];
   let modalOpen = false;
 
   function pad(n){ return String(n).padStart(2,'0'); }
@@ -443,24 +458,10 @@
     return parts[0] + ' ' + parts[1][0].toUpperCase() + '.';
   }
 
-  function loadReservas(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(raw) return JSON.parse(raw);
-      return [];
-    }catch(e){
-      return [];
-    }
-  }
-
-  function saveReservas(list){
-    try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-      return true;
-    }catch(e){
-      console.error('Error guardando la rifa', e);
-      return false;
-    }
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
   }
 
   function renderSkeleton(){
@@ -508,22 +509,6 @@
     progressFill.style.width = ((soldCount / TOTAL_NUMEROS) * 100) + '%';
   }
 
-  function escapeHtml(str){
-    const d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-  }
-
-  function refresh(){
-    if(modalOpen) return;
-    const latest = loadReservas();
-    // Solo re-renderizar si los datos cambiaron realmente
-    if(JSON.stringify(latest) !== JSON.stringify(reservas)){
-      reservas = latest;
-      renderGrid();
-    }
-  }
-
   // ---- Modal apartar número ----
   const modalOverlay = document.getElementById('modal-overlay');
   const modalNum = document.getElementById('modal-num');
@@ -564,38 +549,34 @@
     btn.disabled = true;
     btn.textContent = 'Guardando…';
 
-    // Revisamos el estado más reciente justo antes de escribir,
-    // para reducir el riesgo de que dos personas tomen el mismo número.
-    const latest = loadReservas();
-    if(latest.some(r => r.numero === currentNumero)){
-      modalError.textContent = 'Uy, alguien más acaba de tomar este número. Elige otro.';
+    try {
+      // Verificar en Firebase si el número ya fue tomado (evita colisiones entre usuarios)
+      const snap = await get(ref(db, 'reservas/' + currentNumero));
+      if(snap.exists()){
+        modalError.textContent = 'Uy, alguien más acaba de tomar este número. Elige otro.';
+        btn.disabled = false;
+        btn.textContent = 'Confirmar número';
+        setTimeout(closeModal, 1400);
+        return;
+      }
+
+      // Guardar en Firebase — onValue actualizará el grid automáticamente
+      await set(ref(db, 'reservas/' + currentNumero), {
+        numero: currentNumero,
+        nombre: nombre,
+        telefono: telefono,
+        fecha: new Date().toISOString()
+      });
+
       btn.disabled = false;
       btn.textContent = 'Confirmar número';
-      reservas = latest;
-      renderGrid();
-      setTimeout(closeModal, 1400);
-      return;
-    }
-
-    latest.push({
-      numero: currentNumero,
-      nombre: nombre,
-      telefono: telefono,
-      fecha: new Date().toISOString()
-    });
-
-    const ok = saveReservas(latest);
-    btn.disabled = false;
-    btn.textContent = 'Confirmar número';
-
-    if(!ok){
+      closeModal();
+    } catch(e) {
+      console.error('Error guardando', e);
       modalError.textContent = 'No se pudo guardar. Intenta de nuevo.';
-      return;
+      btn.disabled = false;
+      btn.textContent = 'Confirmar número';
     }
-
-    reservas = latest;
-    renderGrid();
-    closeModal();
   });
 
   // ---- Admin ----
@@ -627,7 +608,6 @@
       adminError.textContent = 'Contraseña incorrecta.';
       return;
     }
-    reservas = loadReservas();
     renderAdminTable();
     adminGate.style.display = 'none';
     adminContent.style.display = 'block';
@@ -668,24 +648,37 @@
     URL.revokeObjectURL(url);
   });
 
-  document.getElementById('admin-reset').addEventListener('click', () => {
+  document.getElementById('admin-reset').addEventListener('click', async () => {
     const confirmText = prompt('Esto borrará TODOS los números apartados. Escribe REINICIAR para confirmar:');
     if(confirmText !== 'REINICIAR') return;
-    const ok = saveReservas([]);
-    if(ok){
-      reservas = [];
-      renderGrid();
-      renderAdminTable();
+    try {
+      await remove(reservasRef);
+      // onValue actualizará el grid y la tabla automáticamente
+    } catch(e) {
+      console.error('Error reiniciando', e);
+      alert('No se pudo reiniciar. Intenta de nuevo.');
     }
   });
 
-  // ---- Init ----
+  // ---- Init: escuchar cambios en tiempo real ----
+  // onValue reemplaza al setInterval — Firebase notifica en tiempo real a todos los dispositivos
   renderSkeleton();
-  reservas = loadReservas();
-  loaded = true;
-  renderGrid();
 
-  setInterval(refresh, 6000);
+  onValue(reservasRef, (snapshot) => {
+    const data = snapshot.val();
+    reservas = data ? Object.values(data) : [];
+
+    if(!modalOpen){
+      renderGrid();
+    }
+
+    // Si el panel admin está abierto, actualizar la tabla también
+    if(adminContent && adminContent.style.display !== 'none'){
+      renderAdminTable();
+    }
+  }, (error) => {
+    console.error('Error conectando a Firebase:', error);
+  });
 </script>
 </body>
 </html>
