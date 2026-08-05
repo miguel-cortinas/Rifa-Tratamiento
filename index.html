@@ -1033,7 +1033,8 @@
   </div>
 
   <main>
-    <p class="hint" id="hint-text">Toca un número disponible para apartarlo. <br>Los números en gris ya fueron elegidos.</p>
+    <p class="hint" id="hint-text">Toca un número disponible para apartarlo. <br>Los números en gris ya fueron elegidos.
+    </p>
     <div class="grid" id="grid"></div>
   </main>
 
@@ -1155,7 +1156,7 @@
           <h3
             style="margin:0 0 8px; font-family:var(--font-display); font-size:26px; color:var(--pitch-dark); font-weight:400; line-height:1;">
             ¡Apartado con éxito!</h3>
-          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">Gracias por apoyar. Recuerda
+          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">Gracias por apoyar.<br> Recuerda
             realizar tu pago de <strong style="color:var(--pitch-dark);">$150</strong> con los datos bancarios que están
             al final de la página.</p>
           <button class="btn-primary" id="btn-entendido" style="width:100%;">Entendido</button>
@@ -1296,7 +1297,7 @@
       const soldCount = reservas.length;
       soldCountEl.textContent = soldCount;
       progressFill.style.width = ((soldCount / TOTAL_NUMEROS) * 100) + '%';
-      
+
       const hintText = document.getElementById('hint-text');
       if (hintText) {
         if (soldCount >= TOTAL_NUMEROS) {
@@ -1359,7 +1360,7 @@
 
       try {
         const docRef = ref(db, 'reservas/' + currentNumero);
-        
+
         // runTransaction previene doble reserva (Race Condition)
         const result = await runTransaction(docRef, (currentData) => {
           if (currentData === null) {
