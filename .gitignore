@@ -1,0 +1,7 @@
+# Archivos internos del agente (skills, configuración)
+.agents/
+skills-lock.json
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

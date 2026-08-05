@@ -429,7 +429,13 @@
   import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
   const TOTAL_NUMEROS = 50;
-  const ADMIN_PASSPHRASE = 'uniformes2026';
+  // Contraseña del admin almacenada como hash SHA-256 (no texto plano)
+  const ADMIN_HASH = '0fadd816f3aa00014562758ec5d2f00653d12e5b10f0a9bf4c0f7e8a41ee3010';
+
+  async function hashPassword(str){
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
 
   const firebaseConfig = {
     apiKey: "AIzaSyAsuHWqOv0DLhSYIC3kqRuEFL_nO3Qx4kU",
@@ -605,8 +611,9 @@
     adminOverlay.classList.add('hidden');
   });
 
-  document.getElementById('admin-enter').addEventListener('click', () => {
-    if(adminPass.value !== ADMIN_PASSPHRASE){
+  document.getElementById('admin-enter').addEventListener('click', async () => {
+    const hash = await hashPassword(adminPass.value);
+    if(hash !== ADMIN_HASH){
       adminError.textContent = 'Contraseña incorrecta.';
       return;
     }
