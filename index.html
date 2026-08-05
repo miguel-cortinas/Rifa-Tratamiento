@@ -1047,16 +1047,23 @@
       </div>
       <div class="ticket-perf"></div>
       <div class="ticket-body">
-        <label>Nombre completo
-          <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off">
-        </label>
-        <label>Teléfono
-          <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off">
-        </label>
-        <p class="ticket-error" id="modal-error"></p>
-        <div class="ticket-actions">
-          <button class="btn-ghost" id="btn-cancelar">Cancelar</button>
-          <button class="btn-primary" id="btn-confirmar">Confirmar número</button>
+        <div id="ticket-form">
+          <label>Nombre completo
+            <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off">
+          </label>
+          <label>Teléfono
+            <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off">
+          </label>
+          <p class="ticket-error" id="modal-error"></p>
+          <div class="ticket-actions">
+            <button class="btn-ghost" id="btn-cancelar">Cancelar</button>
+            <button class="btn-primary" id="btn-confirmar">Confirmar número</button>
+          </div>
+        </div>
+        <div id="ticket-success" style="display:none; text-align:center; padding:10px 0;">
+          <h3 style="margin:0 0 8px; font-family:var(--font-display); font-size:26px; color:var(--pitch-dark); font-weight:400; line-height:1;">¡Apartado con éxito!</h3>
+          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">Gracias por apoyar. Recuerda realizar tu pago de <strong style="color:var(--pitch-dark);">$150</strong> con los datos bancarios que están al final de la página.</p>
+          <button class="btn-primary" id="btn-entendido" style="width:100%;">Entendido</button>
         </div>
       </div>
     </div>
@@ -1209,6 +1216,8 @@
       inputNombre.value = '';
       inputTelefono.value = '';
       modalError.textContent = '';
+      document.getElementById('ticket-form').style.display = 'block';
+      document.getElementById('ticket-success').style.display = 'none';
       modalOverlay.classList.remove('hidden');
       modalOpen = true;
       setTimeout(() => inputNombre.focus(), 50);
@@ -1222,6 +1231,7 @@
     }
 
     document.getElementById('btn-cancelar').addEventListener('click', closeModal);
+    document.getElementById('btn-entendido').addEventListener('click', closeModal);
 
     document.getElementById('btn-confirmar').addEventListener('click', async () => {
       const nombre = inputNombre.value.trim();
@@ -1257,7 +1267,10 @@
 
         btn.disabled = false;
         btn.textContent = 'Confirmar número';
-        closeModal();
+        
+        document.getElementById('ticket-form').style.display = 'none';
+        document.getElementById('ticket-success').style.display = 'block';
+        renderGrid();
       } catch (e) {
         console.error('Error guardando', e);
         modalError.textContent = 'No se pudo guardar. Intenta de nuevo.';
