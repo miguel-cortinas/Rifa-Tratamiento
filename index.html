@@ -85,109 +85,166 @@
     .field-bg {
       position: relative;
       overflow: hidden;
-      background:
-        repeating-linear-gradient(115deg, var(--pitch) 0px, var(--pitch) 90px, var(--pitch-light) 90px, var(--pitch-light) 180px);
-      padding-bottom: 60px;
+      background: var(--pitch-dark);
+      padding-bottom: 50px;
     }
 
-    .field-bg::after {
-      content: "";
+    .blob {
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% -10%, rgba(16, 42, 32, 0) 0%, var(--pitch-dark) 78%);
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      opacity: 0.6;
+      animation: float 8s ease-in-out infinite alternate;
       pointer-events: none;
+    }
+
+    .blob-1 {
+      width: 350px;
+      height: 350px;
+      background: rgba(31, 92, 63, 0.8);
+      top: -100px;
+      left: -100px;
+    }
+
+    .blob-2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(233, 162, 59, 0.25);
+      bottom: -50px;
+      right: -50px;
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(40px, 50px) scale(1.1);
+      }
     }
 
     .hero {
       position: relative;
       text-align: center;
-      padding: 56px 20px 40px;
-      /* Safe area para el notch de iPhone */
+      padding: 60px 20px 30px;
       padding-left: max(20px, env(safe-area-inset-left));
       padding-right: max(20px, env(safe-area-inset-right));
       z-index: 1;
     }
 
-    .center-circle {
-      position: absolute;
-      top: -90px;
-      left: 50%;
-      width: 420px;
-      height: 420px;
-      transform: translateX(-50%);
-      border: 2px solid rgba(244, 247, 241, 0.14);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
     .eyebrow {
+      display: inline-block;
       font-family: var(--font-mono);
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 700;
       color: var(--amber);
-      margin: 0 0 10px;
+      background: rgba(233, 162, 59, 0.1);
+      border: 1px solid rgba(233, 162, 59, 0.25);
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin: 0 0 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     h1 {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(38px, 9vw, 68px);
+      font-size: clamp(42px, 12vw, 76px);
       letter-spacing: 0.01em;
       margin: 0;
-      line-height: 0.95;
-      color: var(--chalk);
-      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.18);
+      line-height: 0.9;
+      background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
     }
 
     .subtitle {
-      max-width: 480px;
-      margin: 16px auto 0;
-      font-size: 15.5px;
+      max-width: 520px;
+      margin: 20px auto 0;
+      font-size: 16px;
       line-height: 1.5;
-      color: var(--chalk-dim);
+      color: rgba(244, 247, 241, 0.8);
     }
 
-    .scoreboard {
+    .hero-stats {
       position: relative;
       z-index: 1;
-      max-width: 420px;
-      margin: 28px auto 0;
-      padding: 14px 20px;
-      /* Safe area horizontal */
-      margin-left: max(16px, env(safe-area-inset-left));
-      margin-right: max(16px, env(safe-area-inset-right));
-      background: rgba(14, 32, 25, 0.55);
-      border: 1px solid rgba(244, 247, 241, 0.18);
-      border-radius: 999px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      justify-content: center;
+      gap: 30px;
+      max-width: fit-content;
+      margin: 20px auto 0;
+      padding: 16px 36px;
+      background: rgba(14, 32, 25, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
     }
 
-    .scoreboard-text {
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-label {
       font-family: var(--font-mono);
-      font-size: 13px;
-      white-space: nowrap;
-      color: var(--chalk);
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--chalk-dim);
+      letter-spacing: 0.12em;
     }
 
-    .scoreboard-text strong {
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--chalk);
+      line-height: 1;
+    }
+
+    .stat-value.text-amber {
       color: var(--amber);
+      text-shadow: 0 0 16px rgba(233, 162, 59, 0.3);
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-progress {
+      position: relative;
+      z-index: 1;
+      max-width: 320px;
+      margin: 24px auto 0;
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
     }
 
     .progress-track {
-      flex: 1;
       height: 6px;
-      background: rgba(244, 247, 241, 0.15);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 99px;
       overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: var(--amber);
+      background: linear-gradient(90deg, #d4954a, var(--amber));
+      box-shadow: 0 0 10px rgba(233, 162, 59, 0.5);
       transition: width .4s ease;
     }
 
@@ -317,32 +374,6 @@
       display: none;
     }
 
-    /* ---- Precio del boleto ---- */
-    .price-badge {
-      position: relative;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin: 14px auto 0;
-      padding: 8px 20px;
-      background: var(--amber);
-      color: var(--ink);
-      border-radius: 999px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      box-shadow: 0 4px 16px rgba(233, 162, 59, 0.35);
-    }
-
-    .price-badge-wrap {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      margin-top: 14px;
-    }
-
     /* ---- Sección premios / pago ---- */
     .section-block {
       max-width: 760px;
@@ -408,9 +439,17 @@
       height: 3px;
     }
 
-    .prize-card.gold::before { background: linear-gradient(90deg, #f0c040, #f5a623); }
-    .prize-card.silver::before { background: linear-gradient(90deg, #9baab5, #c8d6df); }
-    .prize-card.bronze::before { background: linear-gradient(90deg, #c07840, #d4954a); }
+    .prize-card.gold::before {
+      background: linear-gradient(90deg, #f0c040, #f5a623);
+    }
+
+    .prize-card.silver::before {
+      background: linear-gradient(90deg, #9baab5, #c8d6df);
+    }
+
+    .prize-card.bronze::before {
+      background: linear-gradient(90deg, #c07840, #d4954a);
+    }
 
     .prize-place {
       font-family: var(--font-mono);
@@ -419,9 +458,17 @@
       text-transform: uppercase;
     }
 
-    .prize-card.gold .prize-place { color: #f0c040; }
-    .prize-card.silver .prize-place { color: #9baab5; }
-    .prize-card.bronze .prize-place { color: #c07840; }
+    .prize-card.gold .prize-place {
+      color: #f0c040;
+    }
+
+    .prize-card.silver .prize-place {
+      color: #9baab5;
+    }
+
+    .prize-card.bronze .prize-place {
+      color: #c07840;
+    }
 
     .prize-icon {
       line-height: 1;
@@ -472,7 +519,10 @@
       flex-shrink: 0;
     }
 
-    .payment-logo svg { width: 22px; height: 22px; }
+    .payment-logo svg {
+      width: 22px;
+      height: 22px;
+    }
 
     .payment-info-name {
       font-family: var(--font-body);
@@ -500,7 +550,9 @@
       gap: 10px;
     }
 
-    .payment-row:last-child { margin-bottom: 0; }
+    .payment-row:last-child {
+      margin-bottom: 0;
+    }
 
     .payment-row-left {
       display: flex;
@@ -551,11 +603,34 @@
 
     /* Responsive premios < 640px: tarjetas en fila horizontal */
     @media (max-width: 640px) {
-      .prizes-grid { grid-template-columns: 1fr; gap: 10px; }
-      .prize-card { flex-direction: row; text-align: left; padding: 14px 16px; gap: 14px; }
-      .prize-card::before { width: 3px; height: auto; top: 0; left: 0; bottom: 0; right: auto; }
-      .prize-icon { margin: 0; }
-      .payment-value { font-size: 12px; }
+      .prizes-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .prize-card {
+        flex-direction: row;
+        text-align: left;
+        padding: 14px 16px;
+        gap: 14px;
+      }
+
+      .prize-card::before {
+        width: 3px;
+        height: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: auto;
+      }
+
+      .prize-icon {
+        margin: 0;
+      }
+
+      .payment-value {
+        font-size: 12px;
+      }
     }
 
     /* Modal / ticket */
@@ -848,21 +923,13 @@
         font-size: 14px;
       }
 
-      .center-circle {
-        width: 300px;
-        height: 300px;
-        top: -60px;
+      .hero-stats {
+        gap: 20px;
+        padding: 12px 24px;
       }
 
-      .scoreboard {
-        flex-direction: column;
-        border-radius: 14px;
-        gap: 8px;
-        text-align: center;
-      }
-
-      .progress-track {
-        width: 100%;
+      .stat-value {
+        font-size: 20px;
       }
 
       .grid {
@@ -937,27 +1004,36 @@
 <body>
 
   <div class="field-bg">
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
     <div class="hero">
-      <div class="center-circle" aria-hidden="true"></div>
-      <p class="eyebrow">Escuela de fútbol · Boteo pro-uniformes</p>
+      <p class="eyebrow">Escuela de fútbol <br> Boteo pro-uniformes</p>
       <h1>Rifa de<br>Botellas</h1>
-      <p class="subtitle">Elige tu número, anota tus datos y listo — quedas apartado. En cuanto se cierre la rifa, se
-        anuncia el número ganador.</p>
+      <p class="subtitle">Elige tu número, anota tu nombre y teléfono — quedas apartado. <br>El ganador se anuncia al
+        cerrar
+        la rifa.</p>
     </div>
 
-    <div class="scoreboard">
-      <span class="scoreboard-text"><strong id="sold-count">0</strong>/50 vendidos</span>
+    <div class="hero-stats">
+      <div class="stat-box">
+        <span class="stat-label">Precio</span>
+        <span class="stat-value text-amber">$150</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box">
+        <span class="stat-label">Vendidos</span>
+        <span class="stat-value"><span id="sold-count">0</span> / 50</span>
+      </div>
+    </div>
+    <div class="hero-progress">
       <div class="progress-track">
         <div class="progress-fill" id="progress-fill"></div>
       </div>
     </div>
-    <div class="price-badge-wrap">
-      <span class="price-badge">$150 por boleto</span>
-    </div>
   </div>
 
   <main>
-    <p class="hint">Toca un número disponible para apartarlo. Los números en gris ya fueron elegidos.</p>
+    <p class="hint">Toca un número disponible para apartarlo. <br>Los números en gris ya fueron elegidos.</p>
     <div class="grid" id="grid"></div>
   </main>
 
@@ -968,7 +1044,12 @@
       <div class="prize-card gold">
         <span class="prize-place">1er lugar</span>
         <div class="prize-icon" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f0c040" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l2 6-8 4-8-4 2-6z"/><path d="M12 13v5"/><path d="M8 18h8"/></svg>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f0c040" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3h12l2 6-8 4-8-4 2-6z" />
+            <path d="M12 13v5" />
+            <path d="M8 18h8" />
+          </svg>
         </div>
         <div>
           <p class="prize-name">Tequila Don Julio 70 Cristalino</p>
@@ -978,7 +1059,12 @@
       <div class="prize-card silver">
         <span class="prize-place">2do lugar</span>
         <div class="prize-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9baab5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l2 6-8 4-8-4 2-6z"/><path d="M12 13v5"/><path d="M8 18h8"/></svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9baab5" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3h12l2 6-8 4-8-4 2-6z" />
+            <path d="M12 13v5" />
+            <path d="M8 18h8" />
+          </svg>
         </div>
         <div>
           <p class="prize-name">Johnnie Walker Red Label</p>
@@ -988,7 +1074,12 @@
       <div class="prize-card bronze">
         <span class="prize-place">3er lugar</span>
         <div class="prize-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c07840" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l2 6-8 4-8-4 2-6z"/><path d="M12 13v5"/><path d="M8 18h8"/></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c07840" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3h12l2 6-8 4-8-4 2-6z" />
+            <path d="M12 13v5" />
+            <path d="M8 18h8" />
+          </svg>
         </div>
         <div>
           <p class="prize-name">Tequila El Jimador Reposado</p>
@@ -1061,8 +1152,12 @@
           </div>
         </div>
         <div id="ticket-success" style="display:none; text-align:center; padding:10px 0;">
-          <h3 style="margin:0 0 8px; font-family:var(--font-display); font-size:26px; color:var(--pitch-dark); font-weight:400; line-height:1;">¡Apartado con éxito!</h3>
-          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">Gracias por apoyar. Recuerda realizar tu pago de <strong style="color:var(--pitch-dark);">$150</strong> con los datos bancarios que están al final de la página.</p>
+          <h3
+            style="margin:0 0 8px; font-family:var(--font-display); font-size:26px; color:var(--pitch-dark); font-weight:400; line-height:1;">
+            ¡Apartado con éxito!</h3>
+          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">Gracias por apoyar. Recuerda
+            realizar tu pago de <strong style="color:var(--pitch-dark);">$150</strong> con los datos bancarios que están
+            al final de la página.</p>
           <button class="btn-primary" id="btn-entendido" style="width:100%;">Entendido</button>
         </div>
       </div>
@@ -1074,7 +1169,6 @@
     <div class="admin-panel">
       <div id="admin-gate">
         <h2>Panel del organizador</h2>
-        <p class="small">Ingresa la contraseña para ver la lista completa y administrar la rifa.</p>
         <label style="display:block; font-size:12.5px; font-weight:600; margin-bottom:14px;">Contraseña
           <input id="admin-pass" type="password"
             style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(31,92,63,0.3);font-size:14.5px;color:#0E2019;background:#fff;">
@@ -1267,7 +1361,7 @@
 
         btn.disabled = false;
         btn.textContent = 'Confirmar número';
-        
+
         document.getElementById('ticket-form').style.display = 'none';
         document.getElementById('ticket-success').style.display = 'block';
         renderGrid();
