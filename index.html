@@ -1491,7 +1491,10 @@
       const confirmText = prompt('Esto borrará TODOS los números apartados. Escribe REINICIAR para confirmar:');
       if (confirmText !== 'REINICIAR') return;
       try {
-        await remove(reservasRef);
+        // Borramos uno por uno para respetar las Reglas de Seguridad de Firebase
+        // que (correctamente) nos impiden borrar toda la base de datos de un solo golpe
+        const promises = reservas.map(r => remove(ref(db, 'reservas/' + r.numero)));
+        await Promise.all(promises);
         // onValue actualizará el grid y la tabla automáticamente
       } catch (e) {
         console.error('Error reiniciando', e);
