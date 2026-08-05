@@ -1033,7 +1033,7 @@
   </div>
 
   <main>
-    <p class="hint">Toca un número disponible para apartarlo. <br>Los números en gris ya fueron elegidos.</p>
+    <p class="hint" id="hint-text">Toca un número disponible para apartarlo. <br>Los números en gris ya fueron elegidos.</p>
     <div class="grid" id="grid"></div>
   </main>
 
@@ -1140,10 +1140,10 @@
       <div class="ticket-body">
         <div id="ticket-form">
           <label>Nombre completo
-            <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off">
+            <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off" maxlength="40">
           </label>
           <label>Teléfono
-            <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off">
+            <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off" maxlength="15">
           </label>
           <p class="ticket-error" id="modal-error"></p>
           <div class="ticket-actions">
@@ -1205,7 +1205,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, set, get, onValue, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const TOTAL_NUMEROS = 50;
     // Contraseña del admin almacenada como hash SHA-256 (no texto plano)
@@ -1240,9 +1240,11 @@
     function pad(n) { return String(n).padStart(2, '0'); }
 
     function firstNameInitial(nombre) {
+      if (!nombre || typeof nombre !== 'string') return 'Anónimo';
       const parts = nombre.trim().split(/\s+/);
+      if (parts.length === 0 || !parts[0]) return 'Anónimo';
       if (parts.length === 1) return parts[0];
-      return parts[0] + ' ' + parts[1][0].toUpperCase() + '.';
+      return parts[0] + (parts[1] ? ' ' + parts[1][0].toUpperCase() + '.' : '');
     }
 
     function escapeHtml(str) {
@@ -1294,6 +1296,15 @@
       const soldCount = reservas.length;
       soldCountEl.textContent = soldCount;
       progressFill.style.width = ((soldCount / TOTAL_NUMEROS) * 100) + '%';
+      
+      const hintText = document.getElementById('hint-text');
+      if (hintText) {
+        if (soldCount >= TOTAL_NUMEROS) {
+          hintText.innerHTML = '<span style="color:var(--amber);font-weight:600;font-size:16px;">¡Rifa Agotada!</span><br>Todos los boletos han sido vendidos. Espera el anuncio del ganador.';
+        } else {
+          hintText.innerHTML = 'Toca un número disponible para apartarlo. <br>Los números en gris ya fueron elegidos.';
+        }
+      }
     }
 
     // ---- Modal apartar número ----
@@ -1336,28 +1347,40 @@
         return;
       }
 
+      const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+      if (!phoneRegex.test(telefono)) {
+        modalError.textContent = 'Ingresa un teléfono válido.';
+        return;
+      }
+
       const btn = document.getElementById('btn-confirmar');
       btn.disabled = true;
       btn.textContent = 'Guardando…';
 
       try {
-        // Verificar en Firebase si el número ya fue tomado (evita colisiones entre usuarios)
-        const snap = await get(ref(db, 'reservas/' + currentNumero));
-        if (snap.exists()) {
+        const docRef = ref(db, 'reservas/' + currentNumero);
+        
+        // runTransaction previene doble reserva (Race Condition)
+        const result = await runTransaction(docRef, (currentData) => {
+          if (currentData === null) {
+            return {
+              numero: currentNumero,
+              nombre: nombre,
+              telefono: telefono,
+              fecha: new Date().toISOString()
+            };
+          } else {
+            return; // Abortar transacción si el número ya está tomado
+          }
+        });
+
+        if (!result.committed) {
           modalError.textContent = 'Uy, alguien más acaba de tomar este número. Elige otro.';
           btn.disabled = false;
           btn.textContent = 'Confirmar número';
           setTimeout(closeModal, 1400);
           return;
         }
-
-        // Guardar en Firebase — onValue actualizará el grid automáticamente
-        await set(ref(db, 'reservas/' + currentNumero), {
-          numero: currentNumero,
-          nombre: nombre,
-          telefono: telefono,
-          fecha: new Date().toISOString()
-        });
 
         btn.disabled = false;
         btn.textContent = 'Confirmar número';
@@ -1415,12 +1438,13 @@
         return;
       }
       adminTableBody.innerHTML = sorted.map(r => {
+        if (!r || !r.numero) return '';
         const fecha = new Date(r.fecha);
         const fechaStr = isNaN(fecha) ? '' : fecha.toLocaleString('es-MX', { dateStyle: 'short', timeStyle: 'short' });
         return '<tr>' +
           '<td>' + pad(r.numero) + '</td>' +
-          '<td>' + escapeHtml(r.nombre) + '</td>' +
-          '<td>' + escapeHtml(r.telefono) + '</td>' +
+          '<td>' + escapeHtml(r.nombre || 'Anónimo') + '</td>' +
+          '<td>' + escapeHtml(r.telefono || '') + '</td>' +
           '<td>' + fechaStr + '</td>' +
           '<td><button class="btn-liberar" data-num="' + r.numero + '">Liberar</button></td>' +
           '</tr>';
