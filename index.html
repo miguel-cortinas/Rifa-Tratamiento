@@ -1,814 +1,1416 @@
 <!DOCTYPE html>
 <html lang="es" style="color-scheme:dark;">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Rifa de Botellas — Uniformes del equipo</title>
-<meta name="description" content="Aparta tu número de la rifa de botellas pro-uniformes. Elige un número, anota tus datos y listo.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Rifa de Botellas — Uniformes del equipo</title>
+  <meta name="description"
+    content="Aparta tu número de la rifa de botellas pro-uniformes. Elige un número, anota tus datos y listo.">
 
-<!-- Forzar modo oscuro en dispositivos iOS/Android -->
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#102A20">
+  <!-- Forzar modo oscuro en dispositivos iOS/Android -->
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#102A20">
 
-<!-- iOS Safari / Apple -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Rifa de Botellas">
+  <!-- iOS Safari / Apple -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Rifa de Botellas">
 
-<!-- Open Graph / WhatsApp -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rifa-futbol.pages.dev/">
-<meta property="og:title" content="Rifa de Botellas — Pro Uniformes">
-<meta property="og:description" content="Aparta tu número y ayuda al equipo a conseguir sus uniformes. ¡Entra y elige el tuyo!">
-<meta property="og:image" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
-<meta property="og:image:secure_url" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rifa de Botellas pro-uniformes del equipo de fútbol">
-<meta property="og:locale" content="es_MX">
+  <!-- Open Graph / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rifa-futbol.pages.dev/">
+  <meta property="og:title" content="Rifa de Botellas — Pro Uniformes">
+  <meta property="og:description"
+    content="Aparta tu número y ayuda a Mateo y a Thiago a conseguir sus uniformes. ¡Entra y elige el tuyo!">
+  <meta property="og:image" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
+  <meta property="og:image:secure_url" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Rifa de Botellas pro-uniformes del equipo de fútbol">
+  <meta property="og:locale" content="es_MX">
 
-<!-- Twitter Card (también usado por algunos clientes de WhatsApp) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://rifa-futbol.pages.dev/">
-<meta name="twitter:title" content="Rifa de Botellas — Pro Uniformes">
-<meta name="twitter:description" content="Aparta tu número y ayuda al equipo a conseguir sus uniformes.">
-<meta name="twitter:image" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
+  <!-- Twitter Card (también usado por algunos clientes de WhatsApp) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://rifa-futbol.pages.dev/">
+  <meta name="twitter:title" content="Rifa de Botellas — Pro Uniformes">
+  <meta name="twitter:description" content="Aparta tu número y ayuda a Mateo y a Thiago a conseguir sus uniformes.">
+  <meta name="twitter:image" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --pitch-dark:#102A20;
-    --pitch:#1F5C3F;
-    --pitch-light:#2F7350;
-    --chalk:#F4F7F1;
-    --chalk-dim:rgba(244,247,241,0.62);
-    --amber:#E9A23B;
-    --amber-dark:#C97F1E;
-    --sold-bg:#3E4A45;
-    --stamp-red:#B23A48;
-    --ink:#0E2019;
-    --radius:14px;
-    --font-display:'Anton', sans-serif;
-    --font-body:'Work Sans', sans-serif;
-    --font-mono:'Space Mono', monospace;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;}
-  html,body{
-    background:var(--pitch-dark);
-    color:var(--chalk);
-    font-family:var(--font-body);
-    min-height:100vh;
-    /* Forzar fondo oscuro independientemente del modo del sistema */
-    color-scheme:dark;
-    -webkit-text-size-adjust:100%; /* evitar zoom de texto en iOS */
-    text-size-adjust:100%;
-  }
-  .field-bg{
-    position:relative;
-    overflow:hidden;
-    background:
-      repeating-linear-gradient(115deg, var(--pitch) 0px, var(--pitch) 90px, var(--pitch-light) 90px, var(--pitch-light) 180px);
-    padding-bottom:60px;
-  }
-  .field-bg::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:radial-gradient(ellipse at 50% -10%, rgba(16,42,32,0) 0%, var(--pitch-dark) 78%);
-    pointer-events:none;
-  }
-  .hero{
-    position:relative;
-    text-align:center;
-    padding:56px 20px 40px;
-    /* Safe area para el notch de iPhone */
-    padding-left:max(20px, env(safe-area-inset-left));
-    padding-right:max(20px, env(safe-area-inset-right));
-    z-index:1;
-  }
-  .center-circle{
-    position:absolute;
-    top:-90px; left:50%;
-    width:420px; height:420px;
-    transform:translateX(-50%);
-    border:2px solid rgba(244,247,241,0.14);
-    border-radius:50%;
-    pointer-events:none;
-  }
-  .eyebrow{
-    font-family:var(--font-mono);
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    font-size:12px;
-    color:var(--amber);
-    margin:0 0 10px;
-  }
-  h1{
-    font-family:var(--font-display);
-    font-weight:400;
-    font-size:clamp(38px, 9vw, 68px);
-    letter-spacing:0.01em;
-    margin:0;
-    line-height:0.95;
-    color:var(--chalk);
-    text-shadow:0 3px 0 rgba(0,0,0,0.18);
-  }
-  .subtitle{
-    max-width:480px;
-    margin:16px auto 0;
-    font-size:15.5px;
-    line-height:1.5;
-    color:var(--chalk-dim);
-  }
-
-  .scoreboard{
-    position:relative;
-    z-index:1;
-    max-width:420px;
-    margin:28px auto 0;
-    padding:14px 20px;
-    /* Safe area horizontal */
-    margin-left:max(16px, env(safe-area-inset-left));
-    margin-right:max(16px, env(safe-area-inset-right));
-    background:rgba(14,32,25,0.55);
-    border:1px solid rgba(244,247,241,0.18);
-    border-radius:999px;
-    display:flex;
-    align-items:center;
-    gap:14px;
-  }
-  .scoreboard-text{
-    font-family:var(--font-mono);
-    font-size:13px;
-    white-space:nowrap;
-    color:var(--chalk);
-  }
-  .scoreboard-text strong{color:var(--amber);}
-  .progress-track{
-    flex:1;
-    height:6px;
-    background:rgba(244,247,241,0.15);
-    border-radius:99px;
-    overflow:hidden;
-  }
-  .progress-fill{
-    height:100%;
-    width:0%;
-    background:var(--amber);
-    transition:width .4s ease;
-  }
-
-  main{
-    position:relative;
-    z-index:1;
-    max-width:760px;
-    margin:0 auto;
-    padding:36px 20px 10px;
-    /* Safe area para notch/home bar */
-    padding-left:max(20px, env(safe-area-inset-left));
-    padding-right:max(20px, env(safe-area-inset-right));
-  }
-  .hint{
-    text-align:center;
-    font-size:13px;
-    color:var(--chalk-dim);
-    margin:0 0 22px;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(70px, 1fr));
-    gap:10px;
-  }
-  .tag{
-    aspect-ratio:1/1;
-    border-radius:10px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    font-family:var(--font-display);
-    cursor:pointer;
-    border:2px dashed rgba(31,92,63,0.55);
-    background:var(--chalk);
-    color:var(--pitch-dark);
-    opacity:0;
-    animation:rise .45s ease forwards;
-    animation-delay:calc(var(--i, 0) * 12ms);
-    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  }
-  @keyframes rise{
-    from{opacity:0; transform:translateY(8px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-  .tag.available:hover{
-    transform:translateY(-3px) rotate(-1deg);
-    border-color:var(--amber);
-    box-shadow:0 8px 18px rgba(0,0,0,0.25);
-  }
-  .tag.available:focus-visible{
-    outline:3px solid var(--amber);
-    outline-offset:2px;
-  }
-  .tag-num{font-size:22px; line-height:1;}
-  .tag.sold{
-    background:var(--sold-bg);
-    color:var(--chalk-dim);
-    border-color:rgba(244,247,241,0.18);
-    cursor:default;
-    overflow:hidden;
-  }
-  .stamp{
-    position:absolute;
-    font-family:var(--font-mono);
-    font-weight:700;
-    font-size:8.5px;
-    letter-spacing:0.06em;
-    color:var(--chalk);
-    background:var(--stamp-red);
-    padding:2px 8px;
-    border-radius:3px;
-    transform:rotate(-11deg);
-    top:8px;
-    box-shadow:0 2px 4px rgba(0,0,0,0.3);
-  }
-  .buyer{
-    font-family:var(--font-mono);
-    font-size:8.5px;
-    margin-top:2px;
-    color:var(--chalk-dim);
-    max-width:90%;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
-  .tag.skeleton{
-    background:linear-gradient(90deg, rgba(244,247,241,0.12) 25%, rgba(244,247,241,0.22) 37%, rgba(244,247,241,0.12) 63%);
-    background-size:400% 100%;
-    animation:shimmer 1.4s ease infinite;
-    border-color:transparent;
-  }
-  @keyframes shimmer{
-    0%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-  }
-
-  footer{
-    position:relative; z-index:1;
-    text-align:center;
-    font-size:12px;
-    color:var(--chalk-dim);
-    padding:30px 20px;
-    /* Safe area para la home bar de iPhone */
-    padding-bottom:calc(90px + env(safe-area-inset-bottom));
-    padding-left:max(20px, env(safe-area-inset-left));
-    padding-right:max(20px, env(safe-area-inset-right));
-  }
-
-  /* Modal / ticket */
-  .modal-overlay{
-    position:fixed; inset:0;
-    background:rgba(9,20,15,0.72);
-    display:flex; align-items:center; justify-content:center;
-    padding:18px;
-    z-index:50;
-  }
-  .modal-overlay.hidden{display:none;}
-  .ticket{
-    width:100%; max-width:340px;
-    background:var(--chalk);
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 20px 50px rgba(0,0,0,0.4);
-    animation:pop .25s ease;
-  }
-  @keyframes pop{
-    from{transform:scale(0.94); opacity:0;}
-    to{transform:scale(1); opacity:1;}
-  }
-  .ticket-top{
-    background:var(--pitch);
-    color:var(--chalk);
-    padding:18px 22px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .ticket-top .lbl{font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--chalk-dim);}
-  .ticket-top .num{font-family:var(--font-display); font-size:34px; color:var(--amber);}
-  .ticket-perf{
-    height:0;
-    border-top:2px dashed rgba(31,92,63,0.35);
-    margin:0 18px;
-  }
-  .ticket-body{padding:20px 22px 22px; color:var(--ink);}
-  .ticket-body label{
-    display:block;
-    font-size:12.5px;
-    font-weight:600;
-    margin-bottom:14px;
-    color:var(--pitch-dark);
-  }
-  .ticket-body input{
-    display:block;
-    width:100%;
-    margin-top:6px;
-    padding:11px 12px;
-    border-radius:8px;
-    border:1.5px solid rgba(31,92,63,0.3);
-    font-family:var(--font-body);
-    font-size:14.5px;
-    background:#fff;
-  }
-  .ticket-body input:focus{outline:2px solid var(--amber); border-color:var(--amber);}
-  .ticket-actions{display:flex; gap:10px; margin-top:6px;}
-  .btn-primary, .btn-ghost{
-    flex:1;
-    padding:12px 14px;
-    border-radius:9px;
-    font-family:var(--font-body);
-    font-weight:600;
-    font-size:14px;
-    cursor:pointer;
-    border:none;
-  }
-  .btn-primary{background:var(--amber); color:var(--ink);}
-  .btn-primary:hover{background:var(--amber-dark);}
-  .btn-ghost{background:transparent; color:var(--pitch-dark); border:1.5px solid rgba(31,92,63,0.3);}
-  .ticket-error{
-    color:var(--stamp-red);
-    font-size:12.5px;
-    margin:10px 0 0;
-    min-height:1em;
-  }
-
-  /* Admin */
-  .gear-btn{
-    position:fixed;
-    right:max(16px, env(safe-area-inset-right));
-    bottom:max(16px, env(safe-area-inset-bottom));
-    width:48px; height:48px; /* un poco más grande para toque fácil en móvil */
-    border-radius:50%;
-    background:rgba(14,32,25,0.7);
-    border:1px solid rgba(244,247,241,0.2);
-    color:var(--chalk-dim);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-    z-index:40;
-  }
-  .gear-btn:hover{color:var(--chalk);}
-  .admin-panel{
-    width:100%; max-width:520px;
-    background:var(--chalk);
-    color:var(--ink);
-    border-radius:16px;
-    padding:22px;
-    max-height:82vh;
-    overflow-y:auto;
-  }
-  .admin-panel h2{font-family:var(--font-display); font-weight:400; font-size:24px; margin:0 0 4px;}
-  .admin-panel p.small{font-size:12.5px; color:#4b5a54; margin:0 0 16px;}
-  .admin-panel table{width:100%; border-collapse:collapse; font-size:13px;}
-  .admin-panel th, .admin-panel td{
-    text-align:left; padding:8px 6px;
-    border-bottom:1px solid rgba(31,92,63,0.15);
-  }
-  .admin-panel th{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; color:var(--pitch);}
-  .admin-actions{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;}
-  .admin-actions button{padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:none;}
-  .btn-export{background:var(--pitch); color:var(--chalk);}
-  .btn-reset{background:transparent; color:var(--stamp-red); border:1.5px solid var(--stamp-red) !important;}
-  .btn-close{background:transparent; color:#4b5a54; border:1.5px solid rgba(31,92,63,0.25) !important;}
-  .btn-liberar{background:transparent; color:var(--stamp-red); border:1.5px solid var(--stamp-red); padding:4px 10px; border-radius:6px; font-size:11.5px; font-weight:600; cursor:pointer; font-family:var(--font-body); transition:background .15s, color .15s;}
-  .btn-liberar:hover{background:var(--stamp-red); color:#fff;}
-  .empty-row td{color:#8a978f; font-style:italic;}
-
-  /* Botones: área táctil mínima de 44px (guideline iOS/Android) */
-  .btn-primary, .btn-ghost{
-    min-height:44px;
-    -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-  }
-  .tag{
-    -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-  }
-
-  /* Responsive — pantallas pequeñas (< 480px) */
-  @media (max-width:479px){
-    .hero{ padding-top:40px; }
-    h1{ font-size:clamp(32px, 12vw, 56px); }
-    .subtitle{ font-size:14px; }
-    .center-circle{ width:300px; height:300px; top:-60px; }
-    .scoreboard{
-      flex-direction:column;
-      border-radius:14px;
-      gap:8px;
-      text-align:center;
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --pitch-dark: #102A20;
+      --pitch: #1F5C3F;
+      --pitch-light: #2F7350;
+      --chalk: #F4F7F1;
+      --chalk-dim: rgba(244, 247, 241, 0.62);
+      --amber: #E9A23B;
+      --amber-dark: #C97F1E;
+      --sold-bg: #3E4A45;
+      --stamp-red: #B23A48;
+      --ink: #0E2019;
+      --radius: 14px;
+      --font-display: 'Anton', sans-serif;
+      --font-body: 'Work Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
     }
-    .progress-track{ width:100%; }
-    .grid{
-      grid-template-columns:repeat(auto-fill, minmax(58px, 1fr));
-      gap:8px;
+
+    * {
+      box-sizing: border-box;
     }
-    .tag-num{ font-size:19px; }
-    .stamp{ font-size:7.5px; }
-    .buyer{ font-size:8px; }
-    /* Modal ocupa más pantalla en móvil */
-    .modal-overlay{ padding:12px; }
-    .ticket{ max-width:100%; }
-    .admin-panel{ padding:16px; max-height:90vh; }
-    .admin-actions{ flex-direction:column; }
-    .admin-actions button{ width:100%; }
-  }
 
-  /* Responsive — pantallas medianas (480px – 767px) */
-  @media (min-width:480px) and (max-width:767px){
-    .grid{ grid-template-columns:repeat(auto-fill, minmax(64px, 1fr)); }
-    .ticket{ max-width:380px; }
-  }
+    body {
+      margin: 0;
+    }
 
-  /* Evitar que el teclado soft en iOS/Android empuje el layout de forma brusca */
-  @supports(height: 100dvh){
-    html,body{ min-height:100dvh; }
-  }
+    html,
+    body {
+      background: var(--pitch-dark);
+      color: var(--chalk);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      /* Forzar fondo oscuro independientemente del modo del sistema */
+      color-scheme: dark;
+      -webkit-text-size-adjust: 100%;
+      /* evitar zoom de texto en iOS */
+      text-size-adjust: 100%;
+    }
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
-</style>
+    .field-bg {
+      position: relative;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(115deg, var(--pitch) 0px, var(--pitch) 90px, var(--pitch-light) 90px, var(--pitch-light) 180px);
+      padding-bottom: 60px;
+    }
+
+    .field-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% -10%, rgba(16, 42, 32, 0) 0%, var(--pitch-dark) 78%);
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 56px 20px 40px;
+      /* Safe area para el notch de iPhone */
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+      z-index: 1;
+    }
+
+    .center-circle {
+      position: absolute;
+      top: -90px;
+      left: 50%;
+      width: 420px;
+      height: 420px;
+      transform: translateX(-50%);
+      border: 2px solid rgba(244, 247, 241, 0.14);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--amber);
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(38px, 9vw, 68px);
+      letter-spacing: 0.01em;
+      margin: 0;
+      line-height: 0.95;
+      color: var(--chalk);
+      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .subtitle {
+      max-width: 480px;
+      margin: 16px auto 0;
+      font-size: 15.5px;
+      line-height: 1.5;
+      color: var(--chalk-dim);
+    }
+
+    .scoreboard {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      margin: 28px auto 0;
+      padding: 14px 20px;
+      /* Safe area horizontal */
+      margin-left: max(16px, env(safe-area-inset-left));
+      margin-right: max(16px, env(safe-area-inset-right));
+      background: rgba(14, 32, 25, 0.55);
+      border: 1px solid rgba(244, 247, 241, 0.18);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .scoreboard-text {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      white-space: nowrap;
+      color: var(--chalk);
+    }
+
+    .scoreboard-text strong {
+      color: var(--amber);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: rgba(244, 247, 241, 0.15);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--amber);
+      transition: width .4s ease;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 20px 10px;
+      /* Safe area para notch/home bar */
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+
+    .hint {
+      text-align: center;
+      font-size: 13px;
+      color: var(--chalk-dim);
+      margin: 0 0 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      gap: 10px;
+    }
+
+    .tag {
+      aspect-ratio: 1/1;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-family: var(--font-display);
+      cursor: pointer;
+      border: 2px dashed rgba(31, 92, 63, 0.55);
+      background: var(--chalk);
+      color: var(--pitch-dark);
+      opacity: 0;
+      animation: rise .45s ease forwards;
+      animation-delay: calc(var(--i, 0) * 12ms);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tag.available:hover {
+      transform: translateY(-3px) rotate(-1deg);
+      border-color: var(--amber);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .tag.available:focus-visible {
+      outline: 3px solid var(--amber);
+      outline-offset: 2px;
+    }
+
+    .tag-num {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .tag.sold {
+      background: var(--sold-bg);
+      color: var(--chalk-dim);
+      border-color: rgba(244, 247, 241, 0.18);
+      cursor: default;
+      overflow: hidden;
+    }
+
+    .stamp {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 8.5px;
+      letter-spacing: 0.06em;
+      color: var(--chalk);
+      background: var(--stamp-red);
+      padding: 2px 8px;
+      border-radius: 3px;
+      transform: rotate(-11deg);
+      top: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .buyer {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      margin-top: 2px;
+      color: var(--chalk-dim);
+      max-width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tag.skeleton {
+      background: linear-gradient(90deg, rgba(244, 247, 241, 0.12) 25%, rgba(244, 247, 241, 0.22) 37%, rgba(244, 247, 241, 0.12) 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease infinite;
+      border-color: transparent;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    footer {
+      display: none;
+    }
+
+    /* ---- Precio del boleto ---- */
+    .price-badge {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 14px auto 0;
+      padding: 8px 20px;
+      background: var(--amber);
+      color: var(--ink);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 4px 16px rgba(233, 162, 59, 0.35);
+    }
+
+    .price-badge-wrap {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    /* ---- Sección premios / pago ---- */
+    .section-block {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px 10px;
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(244, 247, 241, 0.12);
+    }
+
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .prize-card {
+      border-radius: 16px;
+      padding: 18px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      border: 1px solid rgba(244, 247, 241, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .prize-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .prize-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .prize-card.gold::before { background: linear-gradient(90deg, #f0c040, #f5a623); }
+    .prize-card.silver::before { background: linear-gradient(90deg, #9baab5, #c8d6df); }
+    .prize-card.bronze::before { background: linear-gradient(90deg, #c07840, #d4954a); }
+
+    .prize-place {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .prize-card.gold .prize-place { color: #f0c040; }
+    .prize-card.silver .prize-place { color: #9baab5; }
+    .prize-card.bronze .prize-place { color: #c07840; }
+
+    .prize-icon {
+      line-height: 1;
+      margin: 4px 0;
+    }
+
+    .prize-name {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--chalk);
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .prize-detail {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--chalk-dim);
+      margin: 0;
+    }
+
+    /* ---- Sección pago ---- */
+    .payment-card {
+      border-radius: 16px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(244, 247, 241, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .payment-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .payment-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ec0000, #b30000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .payment-logo svg { width: 22px; height: 22px; }
+
+    .payment-info-name {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--chalk);
+      line-height: 1.2;
+    }
+
+    .payment-info-name span {
+      display: block;
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--chalk-dim);
+    }
+
+    .payment-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 14px;
+      background: rgba(14, 32, 25, 0.45);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .payment-row:last-child { margin-bottom: 0; }
+
+    .payment-row-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .payment-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--chalk-dim);
+    }
+
+    .payment-value {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--chalk);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      flex-shrink: 0;
+      padding: 7px 12px;
+      border-radius: 7px;
+      background: rgba(244, 247, 241, 0.08);
+      border: 1px solid rgba(244, 247, 241, 0.15);
+      color: var(--chalk-dim);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover,
+    .copy-btn.copied {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: var(--ink);
+    }
+
+    /* Responsive premios < 640px: tarjetas en fila horizontal */
+    @media (max-width: 640px) {
+      .prizes-grid { grid-template-columns: 1fr; gap: 10px; }
+      .prize-card { flex-direction: row; text-align: left; padding: 14px 16px; gap: 14px; }
+      .prize-card::before { width: 3px; height: auto; top: 0; left: 0; bottom: 0; right: auto; }
+      .prize-icon { margin: 0; }
+      .payment-value { font-size: 12px; }
+    }
+
+    /* Modal / ticket */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 20, 15, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 50;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .ticket {
+      width: 100%;
+      max-width: 340px;
+      background: var(--chalk);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      animation: pop .25s ease;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.94);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .ticket-top {
+      background: var(--pitch);
+      color: var(--chalk);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ticket-top .lbl {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--chalk-dim);
+    }
+
+    .ticket-top .num {
+      font-family: var(--font-display);
+      font-size: 34px;
+      color: var(--amber);
+    }
+
+    .ticket-perf {
+      height: 0;
+      border-top: 2px dashed rgba(31, 92, 63, 0.35);
+      margin: 0 18px;
+    }
+
+    .ticket-body {
+      padding: 20px 22px 22px;
+      color: var(--ink);
+    }
+
+    .ticket-body label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--pitch-dark);
+    }
+
+    .ticket-body input {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+      padding: 11px 12px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(31, 92, 63, 0.3);
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      background: #fff;
+    }
+
+    .ticket-body input:focus {
+      outline: 2px solid var(--amber);
+      border-color: var(--amber);
+    }
+
+    .ticket-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 9px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--ink);
+    }
+
+    .btn-primary:hover {
+      background: var(--amber-dark);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--pitch-dark);
+      border: 1.5px solid rgba(31, 92, 63, 0.3);
+    }
+
+    .ticket-error {
+      color: var(--stamp-red);
+      font-size: 12.5px;
+      margin: 10px 0 0;
+      min-height: 1em;
+    }
+
+    /* Admin */
+    .gear-btn {
+      position: fixed;
+      right: max(16px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      width: 48px;
+      height: 48px;
+      /* un poco más grande para toque fácil en móvil */
+      border-radius: 50%;
+      background: rgba(14, 32, 25, 0.7);
+      border: 1px solid rgba(244, 247, 241, 0.2);
+      color: var(--chalk-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      z-index: 40;
+    }
+
+    .gear-btn:hover {
+      color: var(--chalk);
+    }
+
+    .admin-panel {
+      width: 100%;
+      max-width: 520px;
+      background: var(--chalk);
+      color: var(--ink);
+      border-radius: 16px;
+      padding: 22px;
+      max-height: 82vh;
+      overflow-y: auto;
+    }
+
+    .admin-panel h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 24px;
+      margin: 0 0 4px;
+    }
+
+    .admin-panel p.small {
+      font-size: 12.5px;
+      color: #4b5a54;
+      margin: 0 0 16px;
+    }
+
+    .admin-panel table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .admin-panel th,
+    .admin-panel td {
+      text-align: left;
+      padding: 8px 6px;
+      border-bottom: 1px solid rgba(31, 92, 63, 0.15);
+    }
+
+    .admin-panel th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--pitch);
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .admin-actions button {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-export {
+      background: var(--pitch);
+      color: var(--chalk);
+    }
+
+    .btn-reset {
+      background: transparent;
+      color: var(--stamp-red);
+      border: 1.5px solid var(--stamp-red) !important;
+    }
+
+    .btn-close {
+      background: transparent;
+      color: #4b5a54;
+      border: 1.5px solid rgba(31, 92, 63, 0.25) !important;
+    }
+
+    .btn-liberar {
+      background: transparent;
+      color: var(--stamp-red);
+      border: 1.5px solid var(--stamp-red);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background .15s, color .15s;
+    }
+
+    .btn-liberar:hover {
+      background: var(--stamp-red);
+      color: #fff;
+    }
+
+    .empty-row td {
+      color: #8a978f;
+      font-style: italic;
+    }
+
+    /* Botones: área táctil mínima de 44px (guideline iOS/Android) */
+    .btn-primary,
+    .btn-ghost {
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .tag {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Responsive — pantallas pequeñas (< 480px) */
+    @media (max-width:479px) {
+      .hero {
+        padding-top: 40px;
+      }
+
+      h1 {
+        font-size: clamp(32px, 12vw, 56px);
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .center-circle {
+        width: 300px;
+        height: 300px;
+        top: -60px;
+      }
+
+      .scoreboard {
+        flex-direction: column;
+        border-radius: 14px;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .progress-track {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+        gap: 8px;
+      }
+
+      .tag-num {
+        font-size: 19px;
+      }
+
+      .stamp {
+        font-size: 7.5px;
+      }
+
+      .buyer {
+        font-size: 8px;
+      }
+
+      /* Modal ocupa más pantalla en móvil */
+      .modal-overlay {
+        padding: 12px;
+      }
+
+      .ticket {
+        max-width: 100%;
+      }
+
+      .admin-panel {
+        padding: 16px;
+        max-height: 90vh;
+      }
+
+      .admin-actions {
+        flex-direction: column;
+      }
+
+      .admin-actions button {
+        width: 100%;
+      }
+    }
+
+    /* Responsive — pantallas medianas (480px – 767px) */
+    @media (min-width:480px) and (max-width:767px) {
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+      }
+
+      .ticket {
+        max-width: 380px;
+      }
+    }
+
+    /* Evitar que el teclado soft en iOS/Android empuje el layout de forma brusca */
+    @supports(height: 100dvh) {
+
+      html,
+      body {
+        min-height: 100dvh;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="field-bg">
-  <div class="hero">
-    <div class="center-circle" aria-hidden="true"></div>
-    <p class="eyebrow">Escuela de fútbol · Boteo pro-uniformes</p>
-    <h1>Rifa de<br>Botellas</h1>
-    <p class="subtitle">Elige tu número, anota tus datos y listo — quedas apartado. En cuanto se cierre la rifa, se anuncia el número ganador.</p>
-  </div>
-
-  <div class="scoreboard">
-    <span class="scoreboard-text"><strong id="sold-count">0</strong>/50 vendidos</span>
-    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-  </div>
-</div>
-
-<main>
-  <p class="hint">Toca un número disponible para apartarlo. Los números en gris ya fueron elegidos.</p>
-  <div class="grid" id="grid"></div>
-</main>
-
-<footer>
-  Los nombres y teléfonos solo son visibles en el panel del organizador.
-</footer>
-
-<button class="gear-btn" id="gear-btn" title="Panel del organizador" aria-label="Panel del organizador">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-</button>
-
-<!-- Modal: apartar número -->
-<div class="modal-overlay hidden" id="modal-overlay">
-  <div class="ticket">
-    <div class="ticket-top">
-      <span class="lbl">Boleto número</span>
-      <span class="num" id="modal-num">00</span>
+  <div class="field-bg">
+    <div class="hero">
+      <div class="center-circle" aria-hidden="true"></div>
+      <p class="eyebrow">Escuela de fútbol · Boteo pro-uniformes</p>
+      <h1>Rifa de<br>Botellas</h1>
+      <p class="subtitle">Elige tu número, anota tus datos y listo — quedas apartado. En cuanto se cierre la rifa, se
+        anuncia el número ganador.</p>
     </div>
-    <div class="ticket-perf"></div>
-    <div class="ticket-body">
-      <label>Nombre completo
-        <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off">
-      </label>
-      <label>Teléfono
-        <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off">
-      </label>
-      <p class="ticket-error" id="modal-error"></p>
-      <div class="ticket-actions">
-        <button class="btn-ghost" id="btn-cancelar">Cancelar</button>
-        <button class="btn-primary" id="btn-confirmar">Confirmar número</button>
+
+    <div class="scoreboard">
+      <span class="scoreboard-text"><strong id="sold-count">0</strong>/50 vendidos</span>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <div class="price-badge-wrap">
+      <span class="price-badge">$150 por boleto</span>
+    </div>
+  </div>
+
+  <main>
+    <p class="hint">Toca un número disponible para apartarlo. Los números en gris ya fueron elegidos.</p>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <!-- Premios -->
+  <section class="section-block" aria-label="Premios">
+    <p class="section-title">Premios</p>
+    <div class="prizes-grid">
+      <div class="prize-card gold">
+        <span class="prize-place">1er lugar</span>
+        <div class="prize-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f0c040" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l2 6-8 4-8-4 2-6z"/><path d="M12 13v5"/><path d="M8 18h8"/></svg>
+        </div>
+        <div>
+          <p class="prize-name">Tequila Don Julio 70 Cristalino</p>
+          <p class="prize-detail">700 ml</p>
+        </div>
+      </div>
+      <div class="prize-card silver">
+        <span class="prize-place">2do lugar</span>
+        <div class="prize-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9baab5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l2 6-8 4-8-4 2-6z"/><path d="M12 13v5"/><path d="M8 18h8"/></svg>
+        </div>
+        <div>
+          <p class="prize-name">Johnnie Walker Red Label</p>
+          <p class="prize-detail">750 ml</p>
+        </div>
+      </div>
+      <div class="prize-card bronze">
+        <span class="prize-place">3er lugar</span>
+        <div class="prize-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c07840" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l2 6-8 4-8-4 2-6z"/><path d="M12 13v5"/><path d="M8 18h8"/></svg>
+        </div>
+        <div>
+          <p class="prize-name">Tequila El Jimador Reposado</p>
+          <p class="prize-detail">950 ml</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo pagar -->
+  <section class="section-block" aria-label="Cómo pagar">
+    <p class="section-title">Cómo pagar</p>
+    <div class="payment-card">
+      <div class="payment-header">
+        <div class="payment-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="3" y="18" font-size="16" font-weight="700" fill="white" font-family="Arial">S</text>
+          </svg>
+        </div>
+        <div class="payment-info-name">
+          Michelle Cortinas
+          <span>Scotiabank · Débito</span>
+        </div>
+      </div>
+      <div class="payment-row">
+        <div class="payment-row-left">
+          <span class="payment-label">Número de tarjeta</span>
+          <span class="payment-value" id="card-num">4043 1300 2963 2540</span>
+        </div>
+        <button class="copy-btn" id="copy-card" aria-label="Copiar número de tarjeta">Copiar</button>
+      </div>
+      <div class="payment-row">
+        <div class="payment-row-left">
+          <span class="payment-label">CLABE interbancaria</span>
+          <span class="payment-value" id="clabe-num">044150256056709620</span>
+        </div>
+        <button class="copy-btn" id="copy-clabe" aria-label="Copiar CLABE">Copiar</button>
+      </div>
+    </div>
+  </section>
+
+  <button class="gear-btn" id="gear-btn" title="Panel del organizador" aria-label="Panel del organizador">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3" />
+      <path
+        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+    </svg>
+  </button>
+
+  <!-- Modal: apartar número -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="ticket">
+      <div class="ticket-top">
+        <span class="lbl">Boleto número</span>
+        <span class="num" id="modal-num">00</span>
+      </div>
+      <div class="ticket-perf"></div>
+      <div class="ticket-body">
+        <label>Nombre completo
+          <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off">
+        </label>
+        <label>Teléfono
+          <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off">
+        </label>
+        <p class="ticket-error" id="modal-error"></p>
+        <div class="ticket-actions">
+          <button class="btn-ghost" id="btn-cancelar">Cancelar</button>
+          <button class="btn-primary" id="btn-confirmar">Confirmar número</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal: admin -->
-<div class="modal-overlay hidden" id="admin-overlay">
-  <div class="admin-panel">
-    <div id="admin-gate">
-      <h2>Panel del organizador</h2>
-      <p class="small">Ingresa la contraseña para ver la lista completa y administrar la rifa.</p>
-      <label style="display:block; font-size:12.5px; font-weight:600; margin-bottom:14px;">Contraseña
-        <input id="admin-pass" type="password" style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(31,92,63,0.3);font-size:14.5px;">
-      </label>
-      <p class="ticket-error" id="admin-error"></p>
-      <div class="admin-actions">
-        <button class="btn-export" id="admin-enter">Entrar</button>
-        <button class="btn-close" id="admin-cancel">Cerrar</button>
+  <!-- Modal: admin -->
+  <div class="modal-overlay hidden" id="admin-overlay">
+    <div class="admin-panel">
+      <div id="admin-gate">
+        <h2>Panel del organizador</h2>
+        <p class="small">Ingresa la contraseña para ver la lista completa y administrar la rifa.</p>
+        <label style="display:block; font-size:12.5px; font-weight:600; margin-bottom:14px;">Contraseña
+          <input id="admin-pass" type="password"
+            style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(31,92,63,0.3);font-size:14.5px;">
+        </label>
+        <p class="ticket-error" id="admin-error"></p>
+        <div class="admin-actions">
+          <button class="btn-export" id="admin-enter">Entrar</button>
+          <button class="btn-close" id="admin-cancel">Cerrar</button>
+        </div>
       </div>
-    </div>
-    <div id="admin-content" style="display:none;">
-      <h2>Lista de participantes</h2>
-      <p class="small">Vista completa, incluye datos de contacto.</p>
-      <table>
-        <thead><tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Fecha</th><th></th></tr></thead>
-        <tbody id="admin-table-body"></tbody>
-      </table>
-      <div class="admin-actions">
-        <button class="btn-export" id="admin-export">Descargar CSV</button>
-        <button class="btn-reset" id="admin-reset">Reiniciar rifa</button>
-        <button class="btn-close" id="admin-close">Cerrar</button>
+      <div id="admin-content" style="display:none;">
+        <h2>Lista de participantes</h2>
+        <p class="small">Vista completa, incluye datos de contacto.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Fecha</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body"></tbody>
+        </table>
+        <div class="admin-actions">
+          <button class="btn-export" id="admin-export">Descargar CSV</button>
+          <button class="btn-reset" id="admin-reset">Reiniciar rifa</button>
+          <button class="btn-close" id="admin-close">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-  const TOTAL_NUMEROS = 50;
-  // Contraseña del admin almacenada como hash SHA-256 (no texto plano)
-  const ADMIN_HASH = '0fadd816f3aa00014562758ec5d2f00653d12e5b10f0a9bf4c0f7e8a41ee3010';
+    const TOTAL_NUMEROS = 50;
+    // Contraseña del admin almacenada como hash SHA-256 (no texto plano)
+    const ADMIN_HASH = '0fadd816f3aa00014562758ec5d2f00653d12e5b10f0a9bf4c0f7e8a41ee3010';
 
-  async function hashPassword(str){
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAsuHWqOv0DLhSYIC3kqRuEFL_nO3Qx4kU",
-    authDomain: "rifa-futbol-c55dc.firebaseapp.com",
-    databaseURL: "https://rifa-futbol-c55dc-default-rtdb.firebaseio.com",
-    projectId: "rifa-futbol-c55dc",
-    storageBucket: "rifa-futbol-c55dc.firebasestorage.app",
-    messagingSenderId: "631818133206",
-    appId: "1:631818133206:web:d8f5b0199d8d726222b377"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const reservasRef = ref(db, 'reservas');
-
-  const grid = document.getElementById('grid');
-  const soldCountEl = document.getElementById('sold-count');
-  const progressFill = document.getElementById('progress-fill');
-
-  let reservas = [];
-  let modalOpen = false;
-
-  function pad(n){ return String(n).padStart(2,'0'); }
-
-  function firstNameInitial(nombre){
-    const parts = nombre.trim().split(/\s+/);
-    if(parts.length === 1) return parts[0];
-    return parts[0] + ' ' + parts[1][0].toUpperCase() + '.';
-  }
-
-  function escapeHtml(str){
-    const d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-  }
-
-  function renderSkeleton(){
-    grid.innerHTML = '';
-    for(let i=1;i<=TOTAL_NUMEROS;i++){
-      const el = document.createElement('div');
-      el.className = 'tag skeleton';
-      el.style.setProperty('--i', i);
-      grid.appendChild(el);
+    async function hashPassword(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
-  }
 
-  function renderGrid(){
-    grid.innerHTML = '';
-    const takenMap = {};
-    reservas.forEach(r => takenMap[r.numero] = r);
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsuHWqOv0DLhSYIC3kqRuEFL_nO3Qx4kU",
+      authDomain: "rifa-futbol-c55dc.firebaseapp.com",
+      databaseURL: "https://rifa-futbol-c55dc-default-rtdb.firebaseio.com",
+      projectId: "rifa-futbol-c55dc",
+      storageBucket: "rifa-futbol-c55dc.firebasestorage.app",
+      messagingSenderId: "631818133206",
+      appId: "1:631818133206:web:d8f5b0199d8d726222b377"
+    };
 
-    for(let i=1;i<=TOTAL_NUMEROS;i++){
-      const entry = takenMap[i];
-      const el = document.createElement('div');
-      el.style.setProperty('--i', i);
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const reservasRef = ref(db, 'reservas');
 
-      if(entry){
-        el.className = 'tag sold';
-        el.innerHTML =
-          '<span class="stamp">VENDIDO</span>' +
-          '<span class="tag-num">' + pad(i) + '</span>' +
-          '<span class="buyer">' + escapeHtml(firstNameInitial(entry.nombre)) + '</span>';
-      } else {
-        el.className = 'tag available';
-        el.setAttribute('tabindex','0');
-        el.setAttribute('role','button');
-        el.setAttribute('aria-label','Apartar número ' + i);
-        el.innerHTML = '<span class="tag-num">' + pad(i) + '</span>';
-        el.addEventListener('click', () => openModal(i));
-        el.addEventListener('keydown', (ev) => {
-          if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); openModal(i); }
-        });
+    const grid = document.getElementById('grid');
+    const soldCountEl = document.getElementById('sold-count');
+    const progressFill = document.getElementById('progress-fill');
+
+    let reservas = [];
+    let modalOpen = false;
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function firstNameInitial(nombre) {
+      const parts = nombre.trim().split(/\s+/);
+      if (parts.length === 1) return parts[0];
+      return parts[0] + ' ' + parts[1][0].toUpperCase() + '.';
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function renderSkeleton() {
+      grid.innerHTML = '';
+      for (let i = 1; i <= TOTAL_NUMEROS; i++) {
+        const el = document.createElement('div');
+        el.className = 'tag skeleton';
+        el.style.setProperty('--i', i);
+        grid.appendChild(el);
       }
-      grid.appendChild(el);
     }
 
-    const soldCount = reservas.length;
-    soldCountEl.textContent = soldCount;
-    progressFill.style.width = ((soldCount / TOTAL_NUMEROS) * 100) + '%';
-  }
+    function renderGrid() {
+      grid.innerHTML = '';
+      const takenMap = {};
+      reservas.forEach(r => takenMap[r.numero] = r);
 
-  // ---- Modal apartar número ----
-  const modalOverlay = document.getElementById('modal-overlay');
-  const modalNum = document.getElementById('modal-num');
-  const inputNombre = document.getElementById('input-nombre');
-  const inputTelefono = document.getElementById('input-telefono');
-  const modalError = document.getElementById('modal-error');
-  let currentNumero = null;
+      for (let i = 1; i <= TOTAL_NUMEROS; i++) {
+        const entry = takenMap[i];
+        const el = document.createElement('div');
+        el.style.setProperty('--i', i);
 
-  function openModal(numero){
-    currentNumero = numero;
-    modalNum.textContent = pad(numero);
-    inputNombre.value = '';
-    inputTelefono.value = '';
-    modalError.textContent = '';
-    modalOverlay.classList.remove('hidden');
-    modalOpen = true;
-    setTimeout(() => inputNombre.focus(), 50);
-  }
+        if (entry) {
+          el.className = 'tag sold';
+          el.innerHTML =
+            '<span class="stamp">VENDIDO</span>' +
+            '<span class="tag-num">' + pad(i) + '</span>' +
+            '<span class="buyer">' + escapeHtml(firstNameInitial(entry.nombre)) + '</span>';
+        } else {
+          el.className = 'tag available';
+          el.setAttribute('tabindex', '0');
+          el.setAttribute('role', 'button');
+          el.setAttribute('aria-label', 'Apartar número ' + i);
+          el.innerHTML = '<span class="tag-num">' + pad(i) + '</span>';
+          el.addEventListener('click', () => openModal(i));
+          el.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openModal(i); }
+          });
+        }
+        grid.appendChild(el);
+      }
 
-  function closeModal(){
-    modalOverlay.classList.add('hidden');
-    modalOpen = false;
-    currentNumero = null;
-  }
-
-  document.getElementById('btn-cancelar').addEventListener('click', closeModal);
-
-  document.getElementById('btn-confirmar').addEventListener('click', async () => {
-    const nombre = inputNombre.value.trim();
-    const telefono = inputTelefono.value.trim();
-
-    if(!nombre || !telefono){
-      modalError.textContent = 'Completa tu nombre y teléfono.';
-      return;
+      const soldCount = reservas.length;
+      soldCountEl.textContent = soldCount;
+      progressFill.style.width = ((soldCount / TOTAL_NUMEROS) * 100) + '%';
     }
 
-    const btn = document.getElementById('btn-confirmar');
-    btn.disabled = true;
-    btn.textContent = 'Guardando…';
+    // ---- Modal apartar número ----
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalNum = document.getElementById('modal-num');
+    const inputNombre = document.getElementById('input-nombre');
+    const inputTelefono = document.getElementById('input-telefono');
+    const modalError = document.getElementById('modal-error');
+    let currentNumero = null;
 
-    try {
-      // Verificar en Firebase si el número ya fue tomado (evita colisiones entre usuarios)
-      const snap = await get(ref(db, 'reservas/' + currentNumero));
-      if(snap.exists()){
-        modalError.textContent = 'Uy, alguien más acaba de tomar este número. Elige otro.';
-        btn.disabled = false;
-        btn.textContent = 'Confirmar número';
-        setTimeout(closeModal, 1400);
+    function openModal(numero) {
+      currentNumero = numero;
+      modalNum.textContent = pad(numero);
+      inputNombre.value = '';
+      inputTelefono.value = '';
+      modalError.textContent = '';
+      modalOverlay.classList.remove('hidden');
+      modalOpen = true;
+      setTimeout(() => inputNombre.focus(), 50);
+    }
+
+    function closeModal() {
+      modalOverlay.classList.add('hidden');
+      modalOpen = false;
+      currentNumero = null;
+    }
+
+    document.getElementById('btn-cancelar').addEventListener('click', closeModal);
+
+    document.getElementById('btn-confirmar').addEventListener('click', async () => {
+      const nombre = inputNombre.value.trim();
+      const telefono = inputTelefono.value.trim();
+
+      if (!nombre || !telefono) {
+        modalError.textContent = 'Completa tu nombre y teléfono.';
         return;
       }
 
-      // Guardar en Firebase — onValue actualizará el grid automáticamente
-      await set(ref(db, 'reservas/' + currentNumero), {
-        numero: currentNumero,
-        nombre: nombre,
-        telefono: telefono,
-        fecha: new Date().toISOString()
-      });
+      const btn = document.getElementById('btn-confirmar');
+      btn.disabled = true;
+      btn.textContent = 'Guardando…';
 
-      btn.disabled = false;
-      btn.textContent = 'Confirmar número';
-      closeModal();
-    } catch(e) {
-      console.error('Error guardando', e);
-      modalError.textContent = 'No se pudo guardar. Intenta de nuevo.';
-      btn.disabled = false;
-      btn.textContent = 'Confirmar número';
-    }
-  });
-
-  // ---- Admin ----
-  const adminOverlay = document.getElementById('admin-overlay');
-  const adminGate = document.getElementById('admin-gate');
-  const adminContent = document.getElementById('admin-content');
-  const adminPass = document.getElementById('admin-pass');
-  const adminError = document.getElementById('admin-error');
-  const adminTableBody = document.getElementById('admin-table-body');
-
-  document.getElementById('gear-btn').addEventListener('click', () => {
-    adminOverlay.classList.remove('hidden');
-    adminGate.style.display = 'block';
-    adminContent.style.display = 'none';
-    adminPass.value = '';
-    adminError.textContent = '';
-    setTimeout(() => adminPass.focus(), 50);
-  });
-
-  document.getElementById('admin-cancel').addEventListener('click', () => {
-    adminOverlay.classList.add('hidden');
-  });
-  document.getElementById('admin-close').addEventListener('click', () => {
-    adminOverlay.classList.add('hidden');
-  });
-
-  document.getElementById('admin-enter').addEventListener('click', async () => {
-    const hash = await hashPassword(adminPass.value);
-    if(hash !== ADMIN_HASH){
-      adminError.textContent = 'Contraseña incorrecta.';
-      return;
-    }
-    renderAdminTable();
-    adminGate.style.display = 'none';
-    adminContent.style.display = 'block';
-  });
-
-  function renderAdminTable(){
-    const sorted = [...reservas].sort((a,b) => a.numero - b.numero);
-    if(sorted.length === 0){
-      adminTableBody.innerHTML = '<tr class="empty-row"><td colspan="5">Todavía no hay números apartados.</td></tr>';
-      return;
-    }
-    adminTableBody.innerHTML = sorted.map(r => {
-      const fecha = new Date(r.fecha);
-      const fechaStr = isNaN(fecha) ? '' : fecha.toLocaleString('es-MX', {dateStyle:'short', timeStyle:'short'});
-      return '<tr>' +
-        '<td>' + pad(r.numero) + '</td>' +
-        '<td>' + escapeHtml(r.nombre) + '</td>' +
-        '<td>' + escapeHtml(r.telefono) + '</td>' +
-        '<td>' + fechaStr + '</td>' +
-        '<td><button class="btn-liberar" data-num="' + r.numero + '">Liberar</button></td>' +
-        '</tr>';
-    }).join('');
-
-    // Eventos de los botones Liberar
-    adminTableBody.querySelectorAll('.btn-liberar').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const numero = parseInt(btn.dataset.num);
-        const entry = reservas.find(r => r.numero === numero);
-        const nombre = entry ? entry.nombre : 'este número';
-        const ok = confirm('¿Liberar el número ' + pad(numero) + ' (' + nombre + ')? La persona quedará sin boleto.');
-        if(!ok) return;
-        try {
-          await remove(ref(db, 'reservas/' + numero));
-          // onValue actualizará el grid y la tabla automáticamente
-        } catch(e) {
-          console.error('Error liberando número', e);
-          alert('No se pudo liberar el número. Intenta de nuevo.');
+      try {
+        // Verificar en Firebase si el número ya fue tomado (evita colisiones entre usuarios)
+        const snap = await get(ref(db, 'reservas/' + currentNumero));
+        if (snap.exists()) {
+          modalError.textContent = 'Uy, alguien más acaba de tomar este número. Elige otro.';
+          btn.disabled = false;
+          btn.textContent = 'Confirmar número';
+          setTimeout(closeModal, 1400);
+          return;
         }
-      });
+
+        // Guardar en Firebase — onValue actualizará el grid automáticamente
+        await set(ref(db, 'reservas/' + currentNumero), {
+          numero: currentNumero,
+          nombre: nombre,
+          telefono: telefono,
+          fecha: new Date().toISOString()
+        });
+
+        btn.disabled = false;
+        btn.textContent = 'Confirmar número';
+        closeModal();
+      } catch (e) {
+        console.error('Error guardando', e);
+        modalError.textContent = 'No se pudo guardar. Intenta de nuevo.';
+        btn.disabled = false;
+        btn.textContent = 'Confirmar número';
+      }
     });
-  }
 
-  document.getElementById('admin-export').addEventListener('click', () => {
-    const sorted = [...reservas].sort((a,b) => a.numero - b.numero);
-    let csv = 'Numero,Nombre,Telefono,Fecha\n';
-    sorted.forEach(r => {
-      csv += [pad(r.numero), '"' + r.nombre.replace(/"/g,'""') + '"', '"' + r.telefono.replace(/"/g,'""') + '"', r.fecha].join(',') + '\n';
+    // ---- Admin ----
+    const adminOverlay = document.getElementById('admin-overlay');
+    const adminGate = document.getElementById('admin-gate');
+    const adminContent = document.getElementById('admin-content');
+    const adminPass = document.getElementById('admin-pass');
+    const adminError = document.getElementById('admin-error');
+    const adminTableBody = document.getElementById('admin-table-body');
+
+    document.getElementById('gear-btn').addEventListener('click', () => {
+      adminOverlay.classList.remove('hidden');
+      adminGate.style.display = 'block';
+      adminContent.style.display = 'none';
+      adminPass.value = '';
+      adminError.textContent = '';
+      setTimeout(() => adminPass.focus(), 50);
     });
-    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'rifa-botellas.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
 
-  document.getElementById('admin-reset').addEventListener('click', async () => {
-    const confirmText = prompt('Esto borrará TODOS los números apartados. Escribe REINICIAR para confirmar:');
-    if(confirmText !== 'REINICIAR') return;
-    try {
-      await remove(reservasRef);
-      // onValue actualizará el grid y la tabla automáticamente
-    } catch(e) {
-      console.error('Error reiniciando', e);
-      alert('No se pudo reiniciar. Intenta de nuevo.');
-    }
-  });
+    document.getElementById('admin-cancel').addEventListener('click', () => {
+      adminOverlay.classList.add('hidden');
+    });
+    document.getElementById('admin-close').addEventListener('click', () => {
+      adminOverlay.classList.add('hidden');
+    });
 
-  // ---- Init: escuchar cambios en tiempo real ----
-  // onValue reemplaza al setInterval — Firebase notifica en tiempo real a todos los dispositivos
-  renderSkeleton();
-
-  onValue(reservasRef, (snapshot) => {
-    const data = snapshot.val();
-    reservas = data ? Object.values(data) : [];
-
-    if(!modalOpen){
-      renderGrid();
-    }
-
-    // Si el panel admin está abierto, actualizar la tabla también
-    if(adminContent && adminContent.style.display !== 'none'){
+    document.getElementById('admin-enter').addEventListener('click', async () => {
+      const hash = await hashPassword(adminPass.value);
+      if (hash !== ADMIN_HASH) {
+        adminError.textContent = 'Contraseña incorrecta.';
+        return;
+      }
       renderAdminTable();
+      adminGate.style.display = 'none';
+      adminContent.style.display = 'block';
+    });
+
+    function renderAdminTable() {
+      const sorted = [...reservas].sort((a, b) => a.numero - b.numero);
+      if (sorted.length === 0) {
+        adminTableBody.innerHTML = '<tr class="empty-row"><td colspan="5">Todavía no hay números apartados.</td></tr>';
+        return;
+      }
+      adminTableBody.innerHTML = sorted.map(r => {
+        const fecha = new Date(r.fecha);
+        const fechaStr = isNaN(fecha) ? '' : fecha.toLocaleString('es-MX', { dateStyle: 'short', timeStyle: 'short' });
+        return '<tr>' +
+          '<td>' + pad(r.numero) + '</td>' +
+          '<td>' + escapeHtml(r.nombre) + '</td>' +
+          '<td>' + escapeHtml(r.telefono) + '</td>' +
+          '<td>' + fechaStr + '</td>' +
+          '<td><button class="btn-liberar" data-num="' + r.numero + '">Liberar</button></td>' +
+          '</tr>';
+      }).join('');
+
+      // Eventos de los botones Liberar
+      adminTableBody.querySelectorAll('.btn-liberar').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const numero = parseInt(btn.dataset.num);
+          const entry = reservas.find(r => r.numero === numero);
+          const nombre = entry ? entry.nombre : 'este número';
+          const ok = confirm('¿Liberar el número ' + pad(numero) + ' (' + nombre + ')? La persona quedará sin boleto.');
+          if (!ok) return;
+          try {
+            await remove(ref(db, 'reservas/' + numero));
+            // onValue actualizará el grid y la tabla automáticamente
+          } catch (e) {
+            console.error('Error liberando número', e);
+            alert('No se pudo liberar el número. Intenta de nuevo.');
+          }
+        });
+      });
     }
-  }, (error) => {
-    console.error('Error conectando a Firebase:', error);
-  });
-</script>
+
+    document.getElementById('admin-export').addEventListener('click', () => {
+      const sorted = [...reservas].sort((a, b) => a.numero - b.numero);
+      let csv = 'Numero,Nombre,Telefono,Fecha\n';
+      sorted.forEach(r => {
+        csv += [pad(r.numero), '"' + r.nombre.replace(/"/g, '""') + '"', '"' + r.telefono.replace(/"/g, '""') + '"', r.fecha].join(',') + '\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'rifa-botellas.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('admin-reset').addEventListener('click', async () => {
+      const confirmText = prompt('Esto borrará TODOS los números apartados. Escribe REINICIAR para confirmar:');
+      if (confirmText !== 'REINICIAR') return;
+      try {
+        await remove(reservasRef);
+        // onValue actualizará el grid y la tabla automáticamente
+      } catch (e) {
+        console.error('Error reiniciando', e);
+        alert('No se pudo reiniciar. Intenta de nuevo.');
+      }
+    });
+
+    // ---- Init: escuchar cambios en tiempo real ----
+    // onValue reemplaza al setInterval — Firebase notifica en tiempo real a todos los dispositivos
+    renderSkeleton();
+
+    onValue(reservasRef, (snapshot) => {
+      const data = snapshot.val();
+      reservas = data ? Object.values(data) : [];
+
+      if (!modalOpen) {
+        renderGrid();
+      }
+
+      // Si el panel admin está abierto, actualizar la tabla también
+      if (adminContent && adminContent.style.display !== 'none') {
+        renderAdminTable();
+      }
+    }, (error) => {
+      console.error('Error conectando a Firebase:', error);
+    });
+
+    // ---- Copiar al portapapeles ----
+    function makeCopyBtn(btnId, valueId) {
+      const btn = document.getElementById(btnId);
+      if (!btn) return;
+      btn.addEventListener('click', async () => {
+        const text = document.getElementById(valueId).textContent.replace(/\s/g, '');
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (_) {
+          // fallback para iOS Safari antiguo
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.cssText = 'position:fixed;opacity:0;';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.textContent = '¡Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+    makeCopyBtn('copy-card', 'card-num');
+    makeCopyBtn('copy-clabe', 'clabe-num');
+  </script>
 </body>
+
 </html>
