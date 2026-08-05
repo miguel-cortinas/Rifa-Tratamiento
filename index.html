@@ -1,9 +1,36 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="color-scheme:dark;">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Rifa de Botellas — Uniformes del equipo</title>
+<meta name="description" content="Aparta tu número de la rifa de botellas pro-uniformes. Elige un número, anota tus datos y listo.">
+
+<!-- Forzar modo oscuro en dispositivos iOS/Android -->
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#102A20">
+
+<!-- iOS Safari / Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rifa de Botellas">
+
+<!-- Open Graph / WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="🏆 Rifa de Botellas — Pro Uniformes">
+<meta property="og:description" content="Aparta tu número y ayuda al equipo a conseguir sus uniformes. ¡Entra y elige el tuyo!">
+<meta property="og:image" content="img/preview.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rifa de Botellas pro-uniformes del equipo de fútbol">
+<meta property="og:locale" content="es_MX">
+
+<!-- Twitter Card (también usado por algunos clientes de WhatsApp) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🏆 Rifa de Botellas — Pro Uniformes">
+<meta name="twitter:description" content="Aparta tu número y ayuda al equipo a conseguir sus uniformes.">
+<meta name="twitter:image" content="img/preview.jpeg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -31,6 +58,10 @@
     color:var(--chalk);
     font-family:var(--font-body);
     min-height:100vh;
+    /* Forzar fondo oscuro independientemente del modo del sistema */
+    color-scheme:dark;
+    -webkit-text-size-adjust:100%; /* evitar zoom de texto en iOS */
+    text-size-adjust:100%;
   }
   .field-bg{
     position:relative;
@@ -50,6 +81,9 @@
     position:relative;
     text-align:center;
     padding:56px 20px 40px;
+    /* Safe area para el notch de iPhone */
+    padding-left:max(20px, env(safe-area-inset-left));
+    padding-right:max(20px, env(safe-area-inset-right));
     z-index:1;
   }
   .center-circle{
@@ -93,6 +127,9 @@
     max-width:420px;
     margin:28px auto 0;
     padding:14px 20px;
+    /* Safe area horizontal */
+    margin-left:max(16px, env(safe-area-inset-left));
+    margin-right:max(16px, env(safe-area-inset-right));
     background:rgba(14,32,25,0.55);
     border:1px solid rgba(244,247,241,0.18);
     border-radius:999px;
@@ -127,6 +164,9 @@
     max-width:760px;
     margin:0 auto;
     padding:36px 20px 10px;
+    /* Safe area para notch/home bar */
+    padding-left:max(20px, env(safe-area-inset-left));
+    padding-right:max(20px, env(safe-area-inset-right));
   }
   .hint{
     text-align:center;
@@ -218,7 +258,11 @@
     text-align:center;
     font-size:12px;
     color:var(--chalk-dim);
-    padding:30px 20px 90px;
+    padding:30px 20px;
+    /* Safe area para la home bar de iPhone */
+    padding-bottom:calc(90px + env(safe-area-inset-bottom));
+    padding-left:max(20px, env(safe-area-inset-left));
+    padding-right:max(20px, env(safe-area-inset-right));
   }
 
   /* Modal / ticket */
@@ -298,14 +342,18 @@
 
   /* Admin */
   .gear-btn{
-    position:fixed; right:16px; bottom:16px;
-    width:42px; height:42px;
+    position:fixed;
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(16px, env(safe-area-inset-bottom));
+    width:48px; height:48px; /* un poco más grande para toque fácil en móvil */
     border-radius:50%;
     background:rgba(14,32,25,0.7);
     border:1px solid rgba(244,247,241,0.2);
     color:var(--chalk-dim);
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
     z-index:40;
   }
   .gear-btn:hover{color:var(--chalk);}
@@ -334,6 +382,56 @@
   .btn-liberar{background:transparent; color:var(--stamp-red); border:1.5px solid var(--stamp-red); padding:4px 10px; border-radius:6px; font-size:11.5px; font-weight:600; cursor:pointer; font-family:var(--font-body); transition:background .15s, color .15s;}
   .btn-liberar:hover{background:var(--stamp-red); color:#fff;}
   .empty-row td{color:#8a978f; font-style:italic;}
+
+  /* Botones: área táctil mínima de 44px (guideline iOS/Android) */
+  .btn-primary, .btn-ghost{
+    min-height:44px;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  .tag{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+
+  /* Responsive — pantallas pequeñas (< 480px) */
+  @media (max-width:479px){
+    .hero{ padding-top:40px; }
+    h1{ font-size:clamp(32px, 12vw, 56px); }
+    .subtitle{ font-size:14px; }
+    .center-circle{ width:300px; height:300px; top:-60px; }
+    .scoreboard{
+      flex-direction:column;
+      border-radius:14px;
+      gap:8px;
+      text-align:center;
+    }
+    .progress-track{ width:100%; }
+    .grid{
+      grid-template-columns:repeat(auto-fill, minmax(58px, 1fr));
+      gap:8px;
+    }
+    .tag-num{ font-size:19px; }
+    .stamp{ font-size:7.5px; }
+    .buyer{ font-size:8px; }
+    /* Modal ocupa más pantalla en móvil */
+    .modal-overlay{ padding:12px; }
+    .ticket{ max-width:100%; }
+    .admin-panel{ padding:16px; max-height:90vh; }
+    .admin-actions{ flex-direction:column; }
+    .admin-actions button{ width:100%; }
+  }
+
+  /* Responsive — pantallas medianas (480px – 767px) */
+  @media (min-width:480px) and (max-width:767px){
+    .grid{ grid-template-columns:repeat(auto-fill, minmax(64px, 1fr)); }
+    .ticket{ max-width:380px; }
+  }
+
+  /* Evitar que el teclado soft en iOS/Android empuje el layout de forma brusca */
+  @supports(height: 100dvh){
+    html,body{ min-height:100dvh; }
+  }
 
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
