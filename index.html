@@ -17,19 +17,34 @@
 
 <!-- Open Graph / WhatsApp -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="🏆 Rifa de Botellas — Pro Uniformes">
+<meta property="og:title" content="Rifa de Botellas — Pro Uniformes">
 <meta property="og:description" content="Aparta tu número y ayuda al equipo a conseguir sus uniformes. ¡Entra y elige el tuyo!">
-<meta property="og:image" content="img/preview.jpeg">
+<!-- og:image, og:url y twitter:image se completan con URL absoluta en el script de abajo -->
+<meta property="og:image" id="og-image" content="">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Rifa de Botellas pro-uniformes del equipo de fútbol">
+<meta property="og:url" id="og-url" content="">
 <meta property="og:locale" content="es_MX">
 
 <!-- Twitter Card (también usado por algunos clientes de WhatsApp) -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="🏆 Rifa de Botellas — Pro Uniformes">
+<meta name="twitter:title" content="Rifa de Botellas — Pro Uniformes">
 <meta name="twitter:description" content="Aparta tu número y ayuda al equipo a conseguir sus uniformes.">
-<meta name="twitter:image" content="img/preview.jpeg">
+<meta name="twitter:image" id="twitter-image" content="">
+
+<!-- Inyectar URLs absolutas para que WhatsApp y otros scrapers puedan cargar la imagen -->
+<script>
+  (function(){
+    var base = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+    var img  = base + 'img/preview.jpeg';
+    var url  = window.location.href.split('?')[0].split('#')[0];
+    document.getElementById('og-image').setAttribute('content', img);
+    document.getElementById('og-url').setAttribute('content', url);
+    document.getElementById('twitter-image').setAttribute('content', img);
+  })();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
