@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rifa de Botellas — Uniformes del equipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch-dark:#102A20;
+    --pitch:#1F5C3F;
+    --pitch-light:#2F7350;
+    --chalk:#F4F7F1;
+    --chalk-dim:rgba(244,247,241,0.62);
+    --amber:#E9A23B;
+    --amber-dark:#C97F1E;
+    --sold-bg:#3E4A45;
+    --stamp-red:#B23A48;
+    --ink:#0E2019;
+    --radius:14px;
+    --font-display:'Anton', sans-serif;
+    --font-body:'Work Sans', sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  html,body{
+    background:var(--pitch-dark);
+    color:var(--chalk);
+    font-family:var(--font-body);
+    min-height:100vh;
+  }
+  .field-bg{
+    position:relative;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(115deg, var(--pitch) 0px, var(--pitch) 90px, var(--pitch-light) 90px, var(--pitch-light) 180px);
+    padding-bottom:60px;
+  }
+  .field-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse at 50% -10%, rgba(16,42,32,0) 0%, var(--pitch-dark) 78%);
+    pointer-events:none;
+  }
+  .hero{
+    position:relative;
+    text-align:center;
+    padding:56px 20px 40px;
+    z-index:1;
+  }
+  .center-circle{
+    position:absolute;
+    top:-90px; left:50%;
+    width:420px; height:420px;
+    transform:translateX(-50%);
+    border:2px solid rgba(244,247,241,0.14);
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--amber);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(38px, 9vw, 68px);
+    letter-spacing:0.01em;
+    margin:0;
+    line-height:0.95;
+    color:var(--chalk);
+    text-shadow:0 3px 0 rgba(0,0,0,0.18);
+  }
+  .subtitle{
+    max-width:480px;
+    margin:16px auto 0;
+    font-size:15.5px;
+    line-height:1.5;
+    color:var(--chalk-dim);
+  }
+
+  .scoreboard{
+    position:relative;
+    z-index:1;
+    max-width:420px;
+    margin:28px auto 0;
+    padding:14px 20px;
+    background:rgba(14,32,25,0.55);
+    border:1px solid rgba(244,247,241,0.18);
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .scoreboard-text{
+    font-family:var(--font-mono);
+    font-size:13px;
+    white-space:nowrap;
+    color:var(--chalk);
+  }
+  .scoreboard-text strong{color:var(--amber);}
+  .progress-track{
+    flex:1;
+    height:6px;
+    background:rgba(244,247,241,0.15);
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--amber);
+    transition:width .4s ease;
+  }
+
+  main{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    margin:0 auto;
+    padding:36px 20px 10px;
+  }
+  .hint{
+    text-align:center;
+    font-size:13px;
+    color:var(--chalk-dim);
+    margin:0 0 22px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(70px, 1fr));
+    gap:10px;
+  }
+  .tag{
+    aspect-ratio:1/1;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    font-family:var(--font-display);
+    cursor:pointer;
+    border:2px dashed rgba(31,92,63,0.55);
+    background:var(--chalk);
+    color:var(--pitch-dark);
+    opacity:0;
+    animation:rise .45s ease forwards;
+    animation-delay:calc(var(--i, 0) * 12ms);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .tag.available:hover{
+    transform:translateY(-3px) rotate(-1deg);
+    border-color:var(--amber);
+    box-shadow:0 8px 18px rgba(0,0,0,0.25);
+  }
+  .tag.available:focus-visible{
+    outline:3px solid var(--amber);
+    outline-offset:2px;
+  }
+  .tag-num{font-size:22px; line-height:1;}
+  .tag.sold{
+    background:var(--sold-bg);
+    color:var(--chalk-dim);
+    border-color:rgba(244,247,241,0.18);
+    cursor:default;
+    overflow:hidden;
+  }
+  .stamp{
+    position:absolute;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:8.5px;
+    letter-spacing:0.06em;
+    color:var(--chalk);
+    background:var(--stamp-red);
+    padding:2px 8px;
+    border-radius:3px;
+    transform:rotate(-11deg);
+    top:8px;
+    box-shadow:0 2px 4px rgba(0,0,0,0.3);
+  }
+  .buyer{
+    font-family:var(--font-mono);
+    font-size:8.5px;
+    margin-top:2px;
+    color:var(--chalk-dim);
+    max-width:90%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .tag.skeleton{
+    background:linear-gradient(90deg, rgba(244,247,241,0.12) 25%, rgba(244,247,241,0.22) 37%, rgba(244,247,241,0.12) 63%);
+    background-size:400% 100%;
+    animation:shimmer 1.4s ease infinite;
+    border-color:transparent;
+  }
+  @keyframes shimmer{
+    0%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+
+  footer{
+    position:relative; z-index:1;
+    text-align:center;
+    font-size:12px;
+    color:var(--chalk-dim);
+    padding:30px 20px 90px;
+  }
+
+  /* Modal / ticket */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(9,20,15,0.72);
+    display:flex; align-items:center; justify-content:center;
+    padding:18px;
+    z-index:50;
+  }
+  .modal-overlay.hidden{display:none;}
+  .ticket{
+    width:100%; max-width:340px;
+    background:var(--chalk);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    animation:pop .25s ease;
+  }
+  @keyframes pop{
+    from{transform:scale(0.94); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+  }
+  .ticket-top{
+    background:var(--pitch);
+    color:var(--chalk);
+    padding:18px 22px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .ticket-top .lbl{font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--chalk-dim);}
+  .ticket-top .num{font-family:var(--font-display); font-size:34px; color:var(--amber);}
+  .ticket-perf{
+    height:0;
+    border-top:2px dashed rgba(31,92,63,0.35);
+    margin:0 18px;
+  }
+  .ticket-body{padding:20px 22px 22px; color:var(--ink);}
+  .ticket-body label{
+    display:block;
+    font-size:12.5px;
+    font-weight:600;
+    margin-bottom:14px;
+    color:var(--pitch-dark);
+  }
+  .ticket-body input{
+    display:block;
+    width:100%;
+    margin-top:6px;
+    padding:11px 12px;
+    border-radius:8px;
+    border:1.5px solid rgba(31,92,63,0.3);
+    font-family:var(--font-body);
+    font-size:14.5px;
+    background:#fff;
+  }
+  .ticket-body input:focus{outline:2px solid var(--amber); border-color:var(--amber);}
+  .ticket-actions{display:flex; gap:10px; margin-top:6px;}
+  .btn-primary, .btn-ghost{
+    flex:1;
+    padding:12px 14px;
+    border-radius:9px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    border:none;
+  }
+  .btn-primary{background:var(--amber); color:var(--ink);}
+  .btn-primary:hover{background:var(--amber-dark);}
+  .btn-ghost{background:transparent; color:var(--pitch-dark); border:1.5px solid rgba(31,92,63,0.3);}
+  .ticket-error{
+    color:var(--stamp-red);
+    font-size:12.5px;
+    margin:10px 0 0;
+    min-height:1em;
+  }
+
+  /* Admin */
+  .gear-btn{
+    position:fixed; right:16px; bottom:16px;
+    width:42px; height:42px;
+    border-radius:50%;
+    background:rgba(14,32,25,0.7);
+    border:1px solid rgba(244,247,241,0.2);
+    color:var(--chalk-dim);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    z-index:40;
+  }
+  .gear-btn:hover{color:var(--chalk);}
+  .admin-panel{
+    width:100%; max-width:520px;
+    background:var(--chalk);
+    color:var(--ink);
+    border-radius:16px;
+    padding:22px;
+    max-height:82vh;
+    overflow-y:auto;
+  }
+  .admin-panel h2{font-family:var(--font-display); font-weight:400; font-size:24px; margin:0 0 4px;}
+  .admin-panel p.small{font-size:12.5px; color:#4b5a54; margin:0 0 16px;}
+  .admin-panel table{width:100%; border-collapse:collapse; font-size:13px;}
+  .admin-panel th, .admin-panel td{
+    text-align:left; padding:8px 6px;
+    border-bottom:1px solid rgba(31,92,63,0.15);
+  }
+  .admin-panel th{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; color:var(--pitch);}
+  .admin-actions{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;}
+  .admin-actions button{padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:none;}
+  .btn-export{background:var(--pitch); color:var(--chalk);}
+  .btn-reset{background:transparent; color:var(--stamp-red); border:1.5px solid var(--stamp-red) !important;}
+  .btn-close{background:transparent; color:#4b5a54; border:1.5px solid rgba(31,92,63,0.25) !important;}
+  .empty-row td{color:#8a978f; font-style:italic;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="field-bg">
+  <div class="hero">
+    <div class="center-circle" aria-hidden="true"></div>
+    <p class="eyebrow">Escuela de fútbol · Boteo pro-uniformes</p>
+    <h1>Rifa de<br>Botellas</h1>
+    <p class="subtitle">Elige tu número, anota tus datos y listo — quedas apartado. En cuanto se cierre la rifa, se anuncia el número ganador.</p>
+  </div>
+
+  <div class="scoreboard">
+    <span class="scoreboard-text"><strong id="sold-count">0</strong>/50 vendidos</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+</div>
+
+<main>
+  <p class="hint">Toca un número disponible para apartarlo. Los números en gris ya fueron elegidos.</p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  Los nombres y teléfonos solo son visibles en el panel del organizador.
+</footer>
+
+<button class="gear-btn" id="gear-btn" title="Panel del organizador" aria-label="Panel del organizador">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+</button>
+
+<!-- Modal: apartar número -->
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="ticket">
+    <div class="ticket-top">
+      <span class="lbl">Boleto número</span>
+      <span class="num" id="modal-num">00</span>
+    </div>
+    <div class="ticket-perf"></div>
+    <div class="ticket-body">
+      <label>Nombre completo
+        <input id="input-nombre" type="text" placeholder="Ej. María López" autocomplete="off">
+      </label>
+      <label>Teléfono
+        <input id="input-telefono" type="tel" placeholder="Ej. 614 123 4567" autocomplete="off">
+      </label>
+      <p class="ticket-error" id="modal-error"></p>
+      <div class="ticket-actions">
+        <button class="btn-ghost" id="btn-cancelar">Cancelar</button>
+        <button class="btn-primary" id="btn-confirmar">Confirmar número</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: admin -->
+<div class="modal-overlay hidden" id="admin-overlay">
+  <div class="admin-panel">
+    <div id="admin-gate">
+      <h2>Panel del organizador</h2>
+      <p class="small">Ingresa la contraseña para ver la lista completa y administrar la rifa.</p>
+      <label style="display:block; font-size:12.5px; font-weight:600; margin-bottom:14px;">Contraseña
+        <input id="admin-pass" type="password" style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(31,92,63,0.3);font-size:14.5px;">
+      </label>
+      <p class="ticket-error" id="admin-error"></p>
+      <div class="admin-actions">
+        <button class="btn-export" id="admin-enter">Entrar</button>
+        <button class="btn-close" id="admin-cancel">Cerrar</button>
+      </div>
+    </div>
+    <div id="admin-content" style="display:none;">
+      <h2>Lista de participantes</h2>
+      <p class="small">Vista completa, incluye datos de contacto.</p>
+      <table>
+        <thead><tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Fecha</th></tr></thead>
+        <tbody id="admin-table-body"></tbody>
+      </table>
+      <div class="admin-actions">
+        <button class="btn-export" id="admin-export">Descargar CSV</button>
+        <button class="btn-reset" id="admin-reset">Reiniciar rifa</button>
+        <button class="btn-close" id="admin-close">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TOTAL_NUMEROS = 50;
+  const STORAGE_KEY = 'rifa-reservas';
+  const ADMIN_PASSPHRASE = 'uniformes2026';
+
+  const grid = document.getElementById('grid');
+  const soldCountEl = document.getElementById('sold-count');
+  const progressFill = document.getElementById('progress-fill');
+
+  let reservas = [];        // [{numero, nombre, telefono, fecha}]
+  let loaded = false;
+  let modalOpen = false;
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function firstNameInitial(nombre){
+    const parts = nombre.trim().split(/\s+/);
+    if(parts.length === 1) return parts[0];
+    return parts[0] + ' ' + parts[1][0].toUpperCase() + '.';
+  }
+
+  function loadReservas(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw) return JSON.parse(raw);
+      return [];
+    }catch(e){
+      return [];
+    }
+  }
+
+  function saveReservas(list){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      return true;
+    }catch(e){
+      console.error('Error guardando la rifa', e);
+      return false;
+    }
+  }
+
+  function renderSkeleton(){
+    grid.innerHTML = '';
+    for(let i=1;i<=TOTAL_NUMEROS;i++){
+      const el = document.createElement('div');
+      el.className = 'tag skeleton';
+      el.style.setProperty('--i', i);
+      grid.appendChild(el);
+    }
+  }
+
+  function renderGrid(){
+    grid.innerHTML = '';
+    const takenMap = {};
+    reservas.forEach(r => takenMap[r.numero] = r);
+
+    for(let i=1;i<=TOTAL_NUMEROS;i++){
+      const entry = takenMap[i];
+      const el = document.createElement('div');
+      el.style.setProperty('--i', i);
+
+      if(entry){
+        el.className = 'tag sold';
+        el.innerHTML =
+          '<span class="stamp">VENDIDO</span>' +
+          '<span class="tag-num">' + pad(i) + '</span>' +
+          '<span class="buyer">' + escapeHtml(firstNameInitial(entry.nombre)) + '</span>';
+      } else {
+        el.className = 'tag available';
+        el.setAttribute('tabindex','0');
+        el.setAttribute('role','button');
+        el.setAttribute('aria-label','Apartar número ' + i);
+        el.innerHTML = '<span class="tag-num">' + pad(i) + '</span>';
+        el.addEventListener('click', () => openModal(i));
+        el.addEventListener('keydown', (ev) => {
+          if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); openModal(i); }
+        });
+      }
+      grid.appendChild(el);
+    }
+
+    const soldCount = reservas.length;
+    soldCountEl.textContent = soldCount;
+    progressFill.style.width = ((soldCount / TOTAL_NUMEROS) * 100) + '%';
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function refresh(){
+    if(modalOpen) return;
+    const latest = loadReservas();
+    // Solo re-renderizar si los datos cambiaron realmente
+    if(JSON.stringify(latest) !== JSON.stringify(reservas)){
+      reservas = latest;
+      renderGrid();
+    }
+  }
+
+  // ---- Modal apartar número ----
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalNum = document.getElementById('modal-num');
+  const inputNombre = document.getElementById('input-nombre');
+  const inputTelefono = document.getElementById('input-telefono');
+  const modalError = document.getElementById('modal-error');
+  let currentNumero = null;
+
+  function openModal(numero){
+    currentNumero = numero;
+    modalNum.textContent = pad(numero);
+    inputNombre.value = '';
+    inputTelefono.value = '';
+    modalError.textContent = '';
+    modalOverlay.classList.remove('hidden');
+    modalOpen = true;
+    setTimeout(() => inputNombre.focus(), 50);
+  }
+
+  function closeModal(){
+    modalOverlay.classList.add('hidden');
+    modalOpen = false;
+    currentNumero = null;
+  }
+
+  document.getElementById('btn-cancelar').addEventListener('click', closeModal);
+
+  document.getElementById('btn-confirmar').addEventListener('click', async () => {
+    const nombre = inputNombre.value.trim();
+    const telefono = inputTelefono.value.trim();
+
+    if(!nombre || !telefono){
+      modalError.textContent = 'Completa tu nombre y teléfono.';
+      return;
+    }
+
+    const btn = document.getElementById('btn-confirmar');
+    btn.disabled = true;
+    btn.textContent = 'Guardando…';
+
+    // Revisamos el estado más reciente justo antes de escribir,
+    // para reducir el riesgo de que dos personas tomen el mismo número.
+    const latest = loadReservas();
+    if(latest.some(r => r.numero === currentNumero)){
+      modalError.textContent = 'Uy, alguien más acaba de tomar este número. Elige otro.';
+      btn.disabled = false;
+      btn.textContent = 'Confirmar número';
+      reservas = latest;
+      renderGrid();
+      setTimeout(closeModal, 1400);
+      return;
+    }
+
+    latest.push({
+      numero: currentNumero,
+      nombre: nombre,
+      telefono: telefono,
+      fecha: new Date().toISOString()
+    });
+
+    const ok = saveReservas(latest);
+    btn.disabled = false;
+    btn.textContent = 'Confirmar número';
+
+    if(!ok){
+      modalError.textContent = 'No se pudo guardar. Intenta de nuevo.';
+      return;
+    }
+
+    reservas = latest;
+    renderGrid();
+    closeModal();
+  });
+
+  // ---- Admin ----
+  const adminOverlay = document.getElementById('admin-overlay');
+  const adminGate = document.getElementById('admin-gate');
+  const adminContent = document.getElementById('admin-content');
+  const adminPass = document.getElementById('admin-pass');
+  const adminError = document.getElementById('admin-error');
+  const adminTableBody = document.getElementById('admin-table-body');
+
+  document.getElementById('gear-btn').addEventListener('click', () => {
+    adminOverlay.classList.remove('hidden');
+    adminGate.style.display = 'block';
+    adminContent.style.display = 'none';
+    adminPass.value = '';
+    adminError.textContent = '';
+    setTimeout(() => adminPass.focus(), 50);
+  });
+
+  document.getElementById('admin-cancel').addEventListener('click', () => {
+    adminOverlay.classList.add('hidden');
+  });
+  document.getElementById('admin-close').addEventListener('click', () => {
+    adminOverlay.classList.add('hidden');
+  });
+
+  document.getElementById('admin-enter').addEventListener('click', () => {
+    if(adminPass.value !== ADMIN_PASSPHRASE){
+      adminError.textContent = 'Contraseña incorrecta.';
+      return;
+    }
+    reservas = loadReservas();
+    renderAdminTable();
+    adminGate.style.display = 'none';
+    adminContent.style.display = 'block';
+  });
+
+  function renderAdminTable(){
+    const sorted = [...reservas].sort((a,b) => a.numero - b.numero);
+    if(sorted.length === 0){
+      adminTableBody.innerHTML = '<tr class="empty-row"><td colspan="4">Todavía no hay números apartados.</td></tr>';
+      return;
+    }
+    adminTableBody.innerHTML = sorted.map(r => {
+      const fecha = new Date(r.fecha);
+      const fechaStr = isNaN(fecha) ? '' : fecha.toLocaleString('es-MX', {dateStyle:'short', timeStyle:'short'});
+      return '<tr>' +
+        '<td>' + pad(r.numero) + '</td>' +
+        '<td>' + escapeHtml(r.nombre) + '</td>' +
+        '<td>' + escapeHtml(r.telefono) + '</td>' +
+        '<td>' + fechaStr + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  document.getElementById('admin-export').addEventListener('click', () => {
+    const sorted = [...reservas].sort((a,b) => a.numero - b.numero);
+    let csv = 'Numero,Nombre,Telefono,Fecha\n';
+    sorted.forEach(r => {
+      csv += [pad(r.numero), '"' + r.nombre.replace(/"/g,'""') + '"', '"' + r.telefono.replace(/"/g,'""') + '"', r.fecha].join(',') + '\n';
+    });
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'rifa-botellas.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('admin-reset').addEventListener('click', () => {
+    const confirmText = prompt('Esto borrará TODOS los números apartados. Escribe REINICIAR para confirmar:');
+    if(confirmText !== 'REINICIAR') return;
+    const ok = saveReservas([]);
+    if(ok){
+      reservas = [];
+      renderGrid();
+      renderAdminTable();
+    }
+  });
+
+  // ---- Init ----
+  renderSkeleton();
+  reservas = loadReservas();
+  loaded = true;
+  renderGrid();
+
+  setInterval(refresh, 6000);
+</script>
+</body>
+</html>
