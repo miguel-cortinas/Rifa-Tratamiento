@@ -331,6 +331,8 @@
   .btn-export{background:var(--pitch); color:var(--chalk);}
   .btn-reset{background:transparent; color:var(--stamp-red); border:1.5px solid var(--stamp-red) !important;}
   .btn-close{background:transparent; color:#4b5a54; border:1.5px solid rgba(31,92,63,0.25) !important;}
+  .btn-liberar{background:transparent; color:var(--stamp-red); border:1.5px solid var(--stamp-red); padding:4px 10px; border-radius:6px; font-size:11.5px; font-weight:600; cursor:pointer; font-family:var(--font-body); transition:background .15s, color .15s;}
+  .btn-liberar:hover{background:var(--stamp-red); color:#fff;}
   .empty-row td{color:#8a978f; font-style:italic;}
 
   @media (prefers-reduced-motion: reduce){
@@ -410,7 +412,7 @@
       <h2>Lista de participantes</h2>
       <p class="small">Vista completa, incluye datos de contacto.</p>
       <table>
-        <thead><tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Fecha</th></tr></thead>
+        <thead><tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Fecha</th><th></th></tr></thead>
         <tbody id="admin-table-body"></tbody>
       </table>
       <div class="admin-actions">
@@ -616,7 +618,7 @@
   function renderAdminTable(){
     const sorted = [...reservas].sort((a,b) => a.numero - b.numero);
     if(sorted.length === 0){
-      adminTableBody.innerHTML = '<tr class="empty-row"><td colspan="4">Todavía no hay números apartados.</td></tr>';
+      adminTableBody.innerHTML = '<tr class="empty-row"><td colspan="5">Todavía no hay números apartados.</td></tr>';
       return;
     }
     adminTableBody.innerHTML = sorted.map(r => {
@@ -627,8 +629,27 @@
         '<td>' + escapeHtml(r.nombre) + '</td>' +
         '<td>' + escapeHtml(r.telefono) + '</td>' +
         '<td>' + fechaStr + '</td>' +
+        '<td><button class="btn-liberar" data-num="' + r.numero + '">Liberar</button></td>' +
         '</tr>';
     }).join('');
+
+    // Eventos de los botones Liberar
+    adminTableBody.querySelectorAll('.btn-liberar').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const numero = parseInt(btn.dataset.num);
+        const entry = reservas.find(r => r.numero === numero);
+        const nombre = entry ? entry.nombre : 'este número';
+        const ok = confirm('¿Liberar el número ' + pad(numero) + ' (' + nombre + ')? La persona quedará sin boleto.');
+        if(!ok) return;
+        try {
+          await remove(ref(db, 'reservas/' + numero));
+          // onValue actualizará el grid y la tabla automáticamente
+        } catch(e) {
+          console.error('Error liberando número', e);
+          alert('No se pudo liberar el número. Intenta de nuevo.');
+        }
+      });
+    });
   }
 
   document.getElementById('admin-export').addEventListener('click', () => {
