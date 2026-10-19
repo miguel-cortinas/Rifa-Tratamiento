@@ -4,39 +4,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Rifa de Botellas — Uniformes del equipo</title>
+  <title>Rifa con Causa — Tratamiento Médico</title>
   <meta name="description"
-    content="Aparta tu número de la rifa de botellas pro-uniformes. Elige un número, anota tus datos y listo.">
+    content="Aparta tu número de la rifa con causa. Ayuda a recaudar fondos para un tratamiento médico. Elige un número, anota tus datos y listo.">
 
   <!-- Forzar modo oscuro en dispositivos iOS/Android -->
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#102A20">
+  <meta name="theme-color" content="#1A0B2E">
 
   <!-- iOS Safari / Apple -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Rifa de Botellas">
+  <meta name="apple-mobile-web-app-title" content="Rifa con Causa">
 
   <!-- Open Graph / WhatsApp -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rifa-futbol.pages.dev/">
-  <meta property="og:title" content="Rifa de Botellas — Pro Uniformes">
+  <meta property="og:title" content="Rifa con Causa — Tratamiento Médico">
   <meta property="og:description"
-    content="Aparta tu número y ayuda a Mateo y a Thiago a conseguir sus uniformes. ¡Entra y elige el tuyo!">
-  <meta property="og:image" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
-  <meta property="og:image:secure_url" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
-  <meta property="og:image:type" content="image/jpeg">
+    content="Aparta tu número y apoya a recaudar fondos para un tratamiento médico. ¡Entra y elige el tuyo!">
+  <meta property="og:image" content="https://rifa-futbol.pages.dev/img/preview2.jpg">
+  <meta property="og:image:secure_url" content="https://rifa-futbol.pages.dev/img/preview2.jpg">
+  <meta property="og:image:type" content="image/jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Rifa de Botellas pro-uniformes del equipo de fútbol">
+  <meta property="og:image:alt" content="Rifa con causa — Tratamiento médico">
   <meta property="og:locale" content="es_MX">
 
   <!-- Twitter Card (también usado por algunos clientes de WhatsApp) -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://rifa-futbol.pages.dev/">
-  <meta name="twitter:title" content="Rifa de Botellas — Pro Uniformes">
-  <meta name="twitter:description" content="Aparta tu número y ayuda a Mateo y a Thiago a conseguir sus uniformes.">
-  <meta name="twitter:image" content="https://rifa-futbol.pages.dev/img/preview.jpeg">
+  <meta name="twitter:title" content="Rifa con Causa — Tratamiento Médico">
+  <meta name="twitter:description" content="Aparta tu número y apoya a recaudar fondos para un tratamiento médico.">
+  <meta name="twitter:image" content="https://rifa-futbol.pages.dev/img/preview2.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,16 +45,16 @@
     rel="stylesheet">
   <style>
     :root {
-      --pitch-dark: #102A20;
-      --pitch: #1F5C3F;
-      --pitch-light: #2F7350;
-      --chalk: #F4F7F1;
-      --chalk-dim: rgba(244, 247, 241, 0.62);
+      --pitch-dark: #1A0B2E;
+      --pitch: #3B1F6A;
+      --pitch-light: #5A3490;
+      --chalk: #F4F1FA;
+      --chalk-dim: rgba(244, 241, 250, 0.62);
       --amber: #E9A23B;
       --amber-dark: #C97F1E;
-      --sold-bg: #3E4A45;
+      --sold-bg: #2E2040;
       --stamp-red: #B23A48;
-      --ink: #0E2019;
+      --ink: #120820;
       --radius: 14px;
       --font-display: 'Anton', sans-serif;
       --font-body: 'Work Sans', sans-serif;
@@ -102,7 +102,7 @@
     .blob-1 {
       width: 350px;
       height: 350px;
-      background: rgba(31, 92, 63, 0.8);
+      background: rgba(59, 31, 106, 0.9);
       top: -100px;
       left: -100px;
     }
@@ -110,7 +110,7 @@
     .blob-2 {
       width: 300px;
       height: 300px;
-      background: rgba(233, 162, 59, 0.25);
+      background: rgba(233, 162, 59, 0.2);
       bottom: -50px;
       right: -50px;
       animation-delay: -4s;
@@ -282,7 +282,7 @@
       position: relative;
       font-family: var(--font-display);
       cursor: pointer;
-      border: 2px dashed rgba(31, 92, 63, 0.55);
+      border: 2px dashed rgba(90, 52, 144, 0.55);
       background: var(--chalk);
       color: var(--pitch-dark);
       opacity: 0;
@@ -372,6 +372,56 @@
 
     footer {
       display: none;
+    }
+
+    /* ---- Tarjeta del premio ---- */
+    .prize-hero {
+      position: relative;
+      z-index: 1;
+      max-width: 340px;
+      margin: 28px auto 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .prize-hero img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .prize-hero-label {
+      background: rgba(14, 32, 25, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .prize-hero-name {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--chalk);
+    }
+
+    .prize-hero-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(233, 162, 59, 0.15);
+      border: 1px solid rgba(233, 162, 59, 0.3);
+      padding: 4px 10px;
+      border-radius: 99px;
+      white-space: nowrap;
     }
 
     /* ---- Sección premios / pago ---- */
@@ -696,7 +746,7 @@
 
     .ticket-perf {
       height: 0;
-      border-top: 2px dashed rgba(31, 92, 63, 0.35);
+      border-top: 2px dashed rgba(90, 52, 144, 0.35);
       margin: 0 18px;
     }
 
@@ -719,7 +769,7 @@
       margin-top: 6px;
       padding: 11px 12px;
       border-radius: 8px;
-      border: 1.5px solid rgba(31, 92, 63, 0.3);
+      border: 1.5px solid rgba(90, 52, 144, 0.3);
       font-family: var(--font-body);
       font-size: 14.5px;
       background: #fff;
@@ -761,7 +811,7 @@
     .btn-ghost {
       background: transparent;
       color: var(--pitch-dark);
-      border: 1.5px solid rgba(31, 92, 63, 0.3);
+      border: 1.5px solid rgba(90, 52, 144, 0.3);
     }
 
     .ticket-error {
@@ -830,14 +880,14 @@
     .admin-panel td {
       text-align: left;
       padding: 8px 6px;
-      border-bottom: 1px solid rgba(31, 92, 63, 0.15);
+      border-bottom: 1px solid rgba(90, 52, 144, 0.15);
     }
 
     .admin-panel th {
       font-family: var(--font-mono);
       font-size: 11px;
       text-transform: uppercase;
-      color: var(--pitch);
+      color: var(--pitch-light);
     }
 
     .admin-actions {
@@ -869,8 +919,8 @@
 
     .btn-close {
       background: transparent;
-      color: #4b5a54;
-      border: 1.5px solid rgba(31, 92, 63, 0.25) !important;
+      color: #6b5f80;
+      border: 1.5px solid rgba(90, 52, 144, 0.25) !important;
     }
 
     .btn-liberar {
@@ -1007,22 +1057,33 @@
     <div class="blob blob-1" aria-hidden="true"></div>
     <div class="blob blob-2" aria-hidden="true"></div>
     <div class="hero">
-      <p class="eyebrow">Escuela de fútbol <br> Boteo pro-uniformes</p>
-      <h1>Rifa de<br>Botellas</h1>
-      <p class="subtitle">Elige tu número, anota tu nombre y teléfono — quedas apartado. <br>El ganador se anuncia al
-        cerrar
-        la rifa.</p>
+      <h1>Rifa<br>Solidaria</h1>
+      <p class="subtitle"
+        style="margin-top:10px; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); font-family:var(--font-mono); font-weight:700;">
+        Tratamiento Médico</p>
+      <p class="subtitle" style="margin-top:14px; font-size:14px; color:rgba(244,247,241,0.7);">Elige tu número y aparta
+        tu boleto.<br>La rifa se realizará cuando se vendan <strong style="color:var(--chalk);">todos los
+          boletos</strong>.</p>
     </div>
 
-    <div class="hero-stats">
+    <!-- Premio -->
+    <div class="prize-hero">
+      <img src="img/premio.jpg" alt="Premio: Cobertor de lujo" loading="lazy">
+      <div class="prize-hero-label">
+        <span class="prize-hero-name">🎁 Cobertor</span>
+        <span class="prize-hero-badge">Premio</span>
+      </div>
+    </div>
+
+    <div class="hero-stats" style="margin-top:24px;">
       <div class="stat-box">
         <span class="stat-label">Precio</span>
-        <span class="stat-value text-amber">$150</span>
+        <span class="stat-value text-amber">$100</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-box">
         <span class="stat-label">Vendidos</span>
-        <span class="stat-value"><span id="sold-count">0</span> / 50</span>
+        <span class="stat-value"><span id="sold-count">0</span> / 30</span>
       </div>
     </div>
     <div class="hero-progress">
@@ -1038,57 +1099,7 @@
     <div class="grid" id="grid"></div>
   </main>
 
-  <!-- Premios -->
-  <section class="section-block" aria-label="Premios">
-    <p class="section-title">Premios</p>
-    <div class="prizes-grid">
-      <div class="prize-card gold">
-        <span class="prize-place">1er lugar</span>
-        <div class="prize-icon" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f0c040" stroke-width="1.6"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 3h12l2 6-8 4-8-4 2-6z" />
-            <path d="M12 13v5" />
-            <path d="M8 18h8" />
-          </svg>
-        </div>
-        <div>
-          <p class="prize-name">Tequila Don Julio 70 Cristalino</p>
-          <p class="prize-detail">700 ml</p>
-        </div>
-      </div>
-      <div class="prize-card silver">
-        <span class="prize-place">2do lugar</span>
-        <div class="prize-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9baab5" stroke-width="1.6"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 3h12l2 6-8 4-8-4 2-6z" />
-            <path d="M12 13v5" />
-            <path d="M8 18h8" />
-          </svg>
-        </div>
-        <div>
-          <p class="prize-name">Johnnie Walker Red Label</p>
-          <p class="prize-detail">750 ml</p>
-        </div>
-      </div>
-      <div class="prize-card bronze">
-        <span class="prize-place">3er lugar</span>
-        <div class="prize-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c07840" stroke-width="1.6"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 3h12l2 6-8 4-8-4 2-6z" />
-            <path d="M12 13v5" />
-            <path d="M8 18h8" />
-          </svg>
-        </div>
-        <div>
-          <p class="prize-name">Tequila El Jimador Reposado</p>
-          <p class="prize-detail">950 ml</p>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Cómo pagar -->
   <section class="section-block" aria-label="Cómo pagar">
@@ -1101,23 +1112,23 @@
           </svg>
         </div>
         <div class="payment-info-name">
-          Michelle Cortinas
-          <span>Scotiabank · Débito</span>
+          Minerva Nevárez
+          <span>Santander &middot; Débito</span>
         </div>
       </div>
       <div class="payment-row">
         <div class="payment-row-left">
           <span class="payment-label">Número de tarjeta</span>
-          <span class="payment-value" id="card-num">4043 1300 2963 2540</span>
+          <span class="payment-value" id="card-num">5579 1004 6536 7652</span>
         </div>
         <button class="copy-btn" id="copy-card" aria-label="Copiar número de tarjeta">Copiar</button>
       </div>
-      <div class="payment-row">
+      <div class="payment-row" style="background:rgba(233,162,59,0.07); border:1px solid rgba(233,162,59,0.2);">
         <div class="payment-row-left">
-          <span class="payment-label">CLABE interbancaria</span>
-          <span class="payment-value" id="clabe-num">044150256056709620</span>
+          <span class="payment-label" style="color:var(--amber);">&#x1F4B5; Efectivo</span>
+          <span class="payment-value" style="font-size:13px; font-weight:500; color:var(--chalk-dim);">También puedes
+            pagar en efectivo directamente con la organizadora.</span>
         </div>
-        <button class="copy-btn" id="copy-clabe" aria-label="Copiar CLABE">Copiar</button>
       </div>
     </div>
   </section>
@@ -1156,9 +1167,9 @@
           <h3
             style="margin:0 0 8px; font-family:var(--font-display); font-size:26px; color:var(--pitch-dark); font-weight:400; line-height:1;">
             ¡Apartado con éxito!</h3>
-          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">Gracias por apoyar.<br> Recuerda
-            realizar tu pago de <strong style="color:var(--pitch-dark);">$150</strong> con los datos bancarios que están
-            al final de la página.</p>
+          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">¡Gracias por tu apoyo a esta
+            causa!<br> Recuerda realizar tu pago de <strong style="color:var(--pitch-dark);">$100</strong> con los datos
+            bancarios que están al final de la página.</p>
           <button class="btn-primary" id="btn-entendido" style="width:100%;">Entendido</button>
         </div>
       </div>
@@ -1172,7 +1183,7 @@
         <h2>Panel del organizador</h2>
         <label style="display:block; font-size:12.5px; font-weight:600; margin-bottom:14px;">Contraseña
           <input id="admin-pass" type="password"
-            style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(31,92,63,0.3);font-size:14.5px;color:#0E2019;background:#fff;">
+            style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(90,52,144,0.3);font-size:14.5px;color:#120820;background:#fff;">
         </label>
         <p class="ticket-error" id="admin-error"></p>
         <div class="admin-actions">
@@ -1208,9 +1219,9 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, set, get, onValue, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    const TOTAL_NUMEROS = 50;
+    const TOTAL_NUMEROS = 30;
     // Contraseña del admin almacenada como hash SHA-256 (no texto plano)
-    const ADMIN_HASH = '0fadd816f3aa00014562758ec5d2f00653d12e5b10f0a9bf4c0f7e8a41ee3010';
+    const ADMIN_HASH = '613d9041695ac9e407c71ec39ca0f13f15c405981abc1a91481c1403d95ee2f0';
 
     async function hashPassword(str) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -1480,7 +1491,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'rifa-botellas.csv';
+      a.download = 'rifa-solidaria.csv';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1546,7 +1557,6 @@
       });
     }
     makeCopyBtn('copy-card', 'card-num');
-    makeCopyBtn('copy-clabe', 'clabe-num');
   </script>
 </body>
 
