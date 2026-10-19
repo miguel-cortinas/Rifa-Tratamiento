@@ -135,22 +135,6 @@
       z-index: 1;
     }
 
-    .eyebrow {
-      display: inline-block;
-      font-family: var(--font-mono);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--amber);
-      background: rgba(233, 162, 59, 0.1);
-      border: 1px solid rgba(233, 162, 59, 0.25);
-      padding: 6px 14px;
-      border-radius: 99px;
-      margin: 0 0 24px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
     h1 {
       font-family: var(--font-display);
       font-weight: 400;
@@ -370,10 +354,6 @@
       }
     }
 
-    footer {
-      display: none;
-    }
-
     /* ---- Tarjeta del premio ---- */
     .prize-hero {
       position: relative;
@@ -394,7 +374,7 @@
     }
 
     .prize-hero-label {
-      background: rgba(14, 32, 25, 0.82);
+      background: rgba(26, 11, 46, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 12px 18px;
@@ -424,7 +404,7 @@
       white-space: nowrap;
     }
 
-    /* ---- Sección premios / pago ---- */
+    /* ---- Sección pago ---- */
     .section-block {
       max-width: 760px;
       margin: 0 auto;
@@ -449,99 +429,9 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: rgba(244, 247, 241, 0.12);
+      background: rgba(244, 241, 250, 0.12);
     }
 
-    .prizes-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .prize-card {
-      border-radius: 16px;
-      padding: 18px 14px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 6px;
-      border: 1px solid rgba(244, 247, 241, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      position: relative;
-      overflow: hidden;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .prize-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-    }
-
-    .prize-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-    }
-
-    .prize-card.gold::before {
-      background: linear-gradient(90deg, #f0c040, #f5a623);
-    }
-
-    .prize-card.silver::before {
-      background: linear-gradient(90deg, #9baab5, #c8d6df);
-    }
-
-    .prize-card.bronze::before {
-      background: linear-gradient(90deg, #c07840, #d4954a);
-    }
-
-    .prize-place {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .prize-card.gold .prize-place {
-      color: #f0c040;
-    }
-
-    .prize-card.silver .prize-place {
-      color: #9baab5;
-    }
-
-    .prize-card.bronze .prize-place {
-      color: #c07840;
-    }
-
-    .prize-icon {
-      line-height: 1;
-      margin: 4px 0;
-    }
-
-    .prize-name {
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--chalk);
-      line-height: 1.3;
-      margin: 0;
-    }
-
-    .prize-detail {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--chalk-dim);
-      margin: 0;
-    }
-
-    /* ---- Sección pago ---- */
     .payment-card {
       border-radius: 16px;
       padding: 20px;
@@ -653,33 +543,7 @@
       color: var(--ink);
     }
 
-    /* Responsive premios < 640px: tarjetas en fila horizontal */
     @media (max-width: 640px) {
-      .prizes-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .prize-card {
-        flex-direction: row;
-        text-align: left;
-        padding: 14px 16px;
-        gap: 14px;
-      }
-
-      .prize-card::before {
-        width: 3px;
-        height: auto;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: auto;
-      }
-
-      .prize-icon {
-        margin: 0;
-      }
-
       .payment-value {
         font-size: 12px;
       }
@@ -689,12 +553,14 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(9, 20, 15, 0.72);
+      background: rgba(18, 8, 32, 0.78);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 18px;
       z-index: 50;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
 
     .modal-overlay.hidden {
@@ -774,8 +640,15 @@
       border: 1.5px solid rgba(90, 52, 144, 0.3);
       font-family: var(--font-body);
       font-size: 14.5px;
-      background: #fff;
-      color: var(--ink);
+      background-color: #FFFFFF !important;
+      color: #120820 !important;
+      -webkit-text-fill-color: #120820;
+      color-scheme: light;
+    }
+
+    .ticket-body input::placeholder {
+      color: #7B6E94;
+      opacity: 0.85;
     }
 
     .ticket-body input:focus {
@@ -832,8 +705,8 @@
       height: 48px;
       /* un poco más grande para toque fácil en móvil */
       border-radius: 50%;
-      background: rgba(14, 32, 25, 0.7);
-      border: 1px solid rgba(244, 247, 241, 0.2);
+      background: rgba(59, 31, 106, 0.75);
+      border: 1px solid rgba(244, 241, 250, 0.25);
       color: var(--chalk-dim);
       display: flex;
       align-items: center;
@@ -842,6 +715,8 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
       z-index: 40;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .gear-btn:hover {
@@ -868,7 +743,7 @@
 
     .admin-panel p.small {
       font-size: 12.5px;
-      color: #4b5a54;
+      color: #5A4D70;
       margin: 0 0 16px;
     }
 
@@ -944,7 +819,7 @@
     }
 
     .empty-row td {
-      color: #8a978f;
+      color: #7D7095;
       font-style: italic;
     }
 
@@ -1169,7 +1044,7 @@
           <h3
             style="margin:0 0 8px; font-family:var(--font-display); font-size:26px; color:var(--pitch-dark); font-weight:400; line-height:1;">
             ¡Apartado con éxito!</h3>
-          <p style="font-size:14px; color:#4b5a54; margin:0 0 20px; line-height:1.45;">¡Gracias por tu apoyo a esta
+          <p style="font-size:14px; color:#4F4066; margin:0 0 20px; line-height:1.45;">¡Gracias por tu apoyo a esta
             causa!<br> Recuerda realizar tu pago de <strong style="color:var(--pitch-dark);">$100</strong> con los datos
             bancarios que están al final de la página.</p>
           <button class="btn-primary" id="btn-entendido" style="width:100%;">Entendido</button>
@@ -1185,7 +1060,7 @@
         <h2>Panel del organizador</h2>
         <label style="display:block; font-size:12.5px; font-weight:600; margin-bottom:14px;">Contraseña
           <input id="admin-pass" type="password"
-            style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(90,52,144,0.3);font-size:14.5px;color:#120820;background:#fff;">
+            style="display:block;width:100%;margin-top:6px;padding:11px 12px;border-radius:8px;border:1.5px solid rgba(90,52,144,0.3);font-size:14.5px;color:#120820;background:#FFFFFF;color-scheme:light;-webkit-text-fill-color:#120820;">
         </label>
         <p class="ticket-error" id="admin-error"></p>
         <div class="admin-actions">
@@ -1352,6 +1227,24 @@
     document.getElementById('btn-cancelar').addEventListener('click', closeModal);
     document.getElementById('btn-entendido').addEventListener('click', closeModal);
 
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    inputNombre.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        inputTelefono.focus();
+      }
+    });
+
+    inputTelefono.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('btn-confirmar').click();
+      }
+    });
+
     document.getElementById('btn-confirmar').addEventListener('click', async () => {
       const nombre = inputNombre.value.trim();
       const telefono = inputTelefono.value.trim();
@@ -1432,6 +1325,24 @@
     });
     document.getElementById('admin-close').addEventListener('click', () => {
       adminOverlay.classList.add('hidden');
+    });
+
+    adminOverlay.addEventListener('click', (e) => {
+      if (e.target === adminOverlay) adminOverlay.classList.add('hidden');
+    });
+
+    adminPass.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('admin-enter').click();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!modalOverlay.classList.contains('hidden')) closeModal();
+        if (!adminOverlay.classList.contains('hidden')) adminOverlay.classList.add('hidden');
+      }
     });
 
     document.getElementById('admin-enter').addEventListener('click', async () => {
