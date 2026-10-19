@@ -48,8 +48,8 @@
       --pitch-dark: #1A0B2E;
       --pitch: #3B1F6A;
       --pitch-light: #5A3490;
-      --chalk: #F4F1FA;
-      --chalk-dim: rgba(244, 241, 250, 0.62);
+      --chalk: #FAF8FD;
+      --chalk-dim: #DDD6EB;
       --amber: #E9A23B;
       --amber-dark: #C97F1E;
       --sold-bg: #2E2040;
@@ -158,7 +158,7 @@
       letter-spacing: 0.01em;
       margin: 0;
       line-height: 0.9;
-      background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 100%);
+      background: linear-gradient(180deg, #FFFFFF 0%, #E6DCF5 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
@@ -169,7 +169,7 @@
       margin: 20px auto 0;
       font-size: 16px;
       line-height: 1.5;
-      color: rgba(244, 247, 241, 0.8);
+      color: #EDE8F5;
     }
 
     .hero-stats {
@@ -182,8 +182,8 @@
       max-width: fit-content;
       margin: 20px auto 0;
       padding: 16px 36px;
-      background: rgba(14, 32, 25, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(35, 16, 58, 0.65);
+      border: 1px solid rgba(244, 241, 250, 0.18);
       border-radius: 24px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -220,7 +220,7 @@
     .stat-divider {
       width: 1px;
       height: 38px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(244, 241, 250, 0.22);
     }
 
     .hero-progress {
@@ -321,8 +321,8 @@
 
     .tag.sold {
       background: var(--sold-bg);
-      color: var(--chalk-dim);
-      border-color: rgba(244, 247, 241, 0.18);
+      color: #DDD6EB;
+      border-color: rgba(244, 241, 250, 0.25);
       cursor: default;
       overflow: hidden;
     }
@@ -333,7 +333,7 @@
       font-weight: 700;
       font-size: 8.5px;
       letter-spacing: 0.06em;
-      color: var(--chalk);
+      color: #FFFFFF;
       background: var(--stamp-red);
       padding: 2px 8px;
       border-radius: 3px;
@@ -346,7 +346,7 @@
       font-family: var(--font-mono);
       font-size: 8.5px;
       margin-top: 2px;
-      color: var(--chalk-dim);
+      color: #E6E0F2;
       max-width: 90%;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -594,7 +594,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 11px 14px;
-      background: rgba(14, 32, 25, 0.45);
+      background: rgba(59, 31, 106, 0.4);
+      border: 1px solid rgba(244, 241, 250, 0.16);
       border-radius: 10px;
       margin-bottom: 8px;
       gap: 10px;
@@ -632,11 +633,12 @@
       flex-shrink: 0;
       padding: 7px 12px;
       border-radius: 7px;
-      background: rgba(244, 247, 241, 0.08);
-      border: 1px solid rgba(244, 247, 241, 0.15);
-      color: var(--chalk-dim);
+      background: rgba(244, 241, 250, 0.14);
+      border: 1px solid rgba(244, 241, 250, 0.3);
+      color: #FAF8FD;
       font-family: var(--font-mono);
       font-size: 11px;
+      font-weight: 600;
       cursor: pointer;
       transition: background .15s, color .15s;
       -webkit-tap-highlight-color: transparent;
@@ -1061,7 +1063,7 @@
       <p class="subtitle"
         style="margin-top:10px; font-size:14px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); font-family:var(--font-mono); font-weight:700;">
         Tratamiento Médico</p>
-      <p class="subtitle" style="margin-top:14px; font-size:14px; color:rgba(244,247,241,0.7);">Elige tu número y aparta
+      <p class="subtitle" style="margin-top:14px; font-size:14px; color:#EDE8F5;">Elige tu número y aparta
         tu boleto.<br>La rifa se realizará cuando se vendan <strong style="color:var(--chalk);">todos los
           boletos</strong>.</p>
     </div>
