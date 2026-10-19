@@ -1498,18 +1498,44 @@
       URL.revokeObjectURL(url);
     });
 
-    document.getElementById('admin-reset').addEventListener('click', async () => {
-      const confirmText = prompt('Esto borrará TODOS los números apartados. Escribe REINICIAR para confirmar:');
-      if (confirmText !== 'REINICIAR') return;
+    const btnReset = document.getElementById('admin-reset');
+    btnReset.addEventListener('click', async () => {
+      const input = prompt('⚠️ ATENCIÓN: Esto borrará TODOS los números apartados de la rifa.\n\nPara confirmar, ingresa tu contraseña de organizador o escribe REINICIAR:');
+      if (input === null) return; // Cancelado por el usuario
+
+      const trimmed = input.trim();
+      const hash = await hashPassword(trimmed);
+      const isPassword = (hash === ADMIN_HASH);
+      const isWord = (trimmed.toUpperCase() === 'REINICIAR');
+
+      if (!isPassword && !isWord) {
+        alert('Confirmación incorrecta. Ingresa tu contraseña de organizador o escribe la palabra REINICIAR.');
+        return;
+      }
+
+      const origText = btnReset.textContent;
+      btnReset.disabled = true;
+      btnReset.textContent = 'Reiniciando…';
+
       try {
-        // Borramos uno por uno para respetar las Reglas de Seguridad de Firebase
-        // que (correctamente) nos impiden borrar toda la base de datos de un solo golpe
-        const promises = reservas.map(r => remove(ref(db, 'reservas/' + r.numero)));
-        await Promise.all(promises);
-        // onValue actualizará el grid y la tabla automáticamente
+        // Obtenemos los números directamente de Firebase para asegurar que se borren todos
+        const snap = await get(reservasRef);
+        const data = snap.val();
+        if (data) {
+          const keys = Object.keys(data);
+          const promises = keys.map(k => remove(ref(db, 'reservas/' + k)));
+          await Promise.all(promises);
+        }
+        reservas = [];
+        renderGrid();
+        renderAdminTable();
+        alert('¡Rifa reiniciada con éxito! Todos los números han sido liberados.');
       } catch (e) {
-        console.error('Error reiniciando', e);
-        alert('No se pudo reiniciar. Intenta de nuevo.');
+        console.error('Error reiniciando rifa:', e);
+        alert('No se pudo reiniciar la rifa. Intenta de nuevo.');
+      } finally {
+        btnReset.disabled = false;
+        btnReset.textContent = origText;
       }
     });
 
